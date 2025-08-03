@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 03:23:06 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 16:07:10 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/03 16:27:26 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ void	launch_shell(t_term *term) {
 int	fill_output(t_term *term) {
 	int	bytes_read;
 
-	bytes_read = read(term->parent_fd, term->output, 255);
-	term->output[bytes_read] = '\0';
+	bytes_read = read(term->parent_fd, &(term->output[term->out_len]), 1024 - term->out_len);
+	if (bytes_read <= 0)
+		return (bytes_read);
+	term->output[bytes_read + term->out_len] = '\0';
+	term->out_len += bytes_read;
 	return (bytes_read);
 }
 
@@ -38,12 +41,13 @@ void	term_runtime(t_term *term) {
 	int		X_fd = ConnectionNumber(term->display);
 	int		max_fd = (X_fd > term->parent_fd ? X_fd : term->parent_fd) + 1;
 
-	init_gc(term);
-	XMapWindow(term->display, term->win);
-	XFlush(term->display);
 	pid = forkpty(&term->parent_fd, NULL, NULL, NULL);
 	if (pid == 0)
 		launch_shell(term);
+	init_gc(term);
+	term->out_len = 0;
+	XMapWindow(term->display, term->win);
+	XFlush(term->display);
 	while (1) {
 		fd_set	read_fds;
 		FD_ZERO(&read_fds);
@@ -73,7 +77,5 @@ void	term_runtime(t_term *term) {
 			}
 			XFlush(term->display);
 		}
-
-		printf("lap\n");
 	}
 }

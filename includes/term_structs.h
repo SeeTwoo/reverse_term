@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 05:18:46 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/03 16:17:52 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ struct s_term {
 	GC			gc;
 	XFontStruct	*font;
 	int			parent_fd;
-	char		output[256];
+	char		output[1024];
+	size_t		out_len;
 };
 
 #endif
