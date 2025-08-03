@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   term_structs.h                                     :+:      :+:    :+:   */
+/*   print_current_buffer.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 19:00:20 by seetwoo          ###   ########.fr       */
+/*   Created: 2025/08/03 20:54:24 by seetwoo           #+#    #+#             */
+/*   Updated: 2025/08/03 21:46:17 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TERM_STRUCTS_H
-# define TERM_STURCTS_H
+#include "reverse_term.h"
 
-typedef struct s_term	t_term;
-typedef struct s_draw	t_draw;
-
-struct s_term {
-	Display		*display;
-	Window		root;
-	Window		win;
-	int			screen;
-	XEvent		event;
-	Atom		wm_delete;
-	GC			gc;
-	XFontStruct	*font;
-	int			parent_fd;
-	char		output[1024];
-	size_t		out_len;
-};
-
-struct s_draw {
-	int		i;
-	int		x;
-	int		y;
-	int		line_height;
-	size_t	line_len;
-};
-
+#ifndef GREEN
+# define GREEN "\e[032m"
+# define RESET "\e[0m"
 #endif
+
+int	print_current_buffer(t_term *term) {
+	int				i;
+	char			*buff;
+	unsigned char	c;
+
+	i = 0;
+	buff = term->output;
+	while (buff[i])
+	{
+		c = buff[i];
+		if (isprint(c))
+			printf("%c", c);
+		else
+			printf("\\x%02x", c);
+		i++;
+	}
+	printf("\n");
+	return (0);
+}

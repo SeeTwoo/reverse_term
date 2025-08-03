@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 03:23:06 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 16:27:26 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/03 17:02:20 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,10 @@ void	launch_shell(t_term *term) {
 
 int	fill_output(t_term *term) {
 	int	bytes_read;
-
-	bytes_read = read(term->parent_fd, &(term->output[term->out_len]), 1024 - term->out_len);
+	
+	if (term->out_len >= sizeof(term->output) - 1)
+		return (0);
+	bytes_read = read(term->parent_fd, &(term->output[term->out_len]), sizeof(term->output) - term->out_len - 1);
 	if (bytes_read <= 0)
 		return (bytes_read);
 	term->output[bytes_read + term->out_len] = '\0';
@@ -38,20 +40,22 @@ int	fill_output(t_term *term) {
 
 void	term_runtime(t_term *term) {
 	pid_t	pid;
-	int		X_fd = ConnectionNumber(term->display);
-	int		max_fd = (X_fd > term->parent_fd ? X_fd : term->parent_fd) + 1;
+	int		x_fd;
+	int		max_fd;
+	fd_set	read_fds;
 
+	init_gc(term);
+	term->out_len = 0;
+	term->output[0] = '\0';
+	XMapWindow(term->display, term->win);
 	pid = forkpty(&term->parent_fd, NULL, NULL, NULL);
 	if (pid == 0)
 		launch_shell(term);
-	init_gc(term);
-	term->out_len = 0;
-	XMapWindow(term->display, term->win);
-	XFlush(term->display);
+	x_fd = ConnectionNumber(term->display);
+	max_fd = (x_fd > term->parent_fd ? x_fd : term->parent_fd) + 1;
 	while (1) {
-		fd_set	read_fds;
 		FD_ZERO(&read_fds);
-		FD_SET(X_fd, &read_fds);
+		FD_SET(x_fd, &read_fds);
 		FD_SET(term->parent_fd, &read_fds);
 
 		if (select(max_fd, &read_fds, NULL, NULL, NULL) == -1) {
@@ -59,23 +63,23 @@ void	term_runtime(t_term *term) {
 			exit(EXIT_FAILURE);
 		}
 
-		if (FD_ISSET(X_fd, &read_fds)) {
-			while (XPending(term->display)) {
+		if (FD_ISSET(term->parent_fd, &read_fds)) {
+			if (fill_output(term) > 0)
+				redraw(term);
+			else
+				exit(EXIT_SUCCESS);
+		}
+
+		if (FD_ISSET(x_fd, &read_fds)) {
+			do {
 				XNextEvent(term->display, &term->event);
 				if (term->event.type == ClientMessage && (Atom)term->event.xclient.data.l[0] == term->wm_delete)
 					exit(EXIT_SUCCESS);
 				if (term->event.type == KeyPress)
 					handle_keypress(term);
-			}
-		}
-
-		if (FD_ISSET(term->parent_fd, &read_fds)) {
-			if (fill_output(term) > 0) {
-				printf("buffer is %s\n", term->output);
-				XClearWindow(term->display, term->win);
-				XDrawString(term->display, term->win, term->gc, 50, 50, term->output, strlen(term->output));
-			}
-			XFlush(term->display);
+				if (term->event.type == Expose)
+					redraw(term);
+			} while (XPending(term->display));
 		}
 	}
 }

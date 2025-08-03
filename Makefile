@@ -9,6 +9,8 @@ SRC_FILES =	destroy_term.c \
 			init_event.c \
 			init_window.c \
 			main.c \
+			print_current_buffer.c \
+			redraw.c \
 			term_runtime.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
