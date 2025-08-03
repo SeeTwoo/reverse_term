@@ -6,13 +6,14 @@
 /*   By: seetwoo <waltibee@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 01:41:54 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 05:38:25 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/03 14:21:15 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REVERSE_TERM_H
 # define REVERSE_TERM_H
 
+# include <ctype.h>
 # include <pty.h>
 # include <stdio.h>
 # include <stdlib.h>
