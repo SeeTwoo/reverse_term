@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   revere_term.h                                      :+:      :+:    :+:   */
+/*   term_structs.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seetwoo <waltibee@gmail.com>               +#+  +:+       +#+        */
+/*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/12 01:41:54 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/05/12 01:44:40 by seetwoo          ###   ########.fr       */
+/*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
+/*   Updated: 2025/08/03 02:09:20 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef REVERSE_TERM_H
-# define REVERSE_TERM_H
+#ifndef TERM_STRUCTS_H
+# define TERM_STURCTS_H
 
-# include <stdlib.h>
-# include <X11/Xlib.h>
-# include <X11/Xutil.h>
-# include <X11/Xatom.h>
+typedef struct s_term	t_term;
+
+struct s_term {
+	Display	*display;
+	Window	root;
+	Window	win;
+	int		screen;
+	XEvent	event;
+	Atom	wm_delete;
+};
 
 #endif

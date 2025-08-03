@@ -1,9 +1,11 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -Iincludes
+CFLAGS = -Wall -Wextra -Werror
 DFLAGS = $(CFLAGS) -g3
+INCLUDES = -Iincludes
 
 SRC_DIR = src
-SRC_FILES =	main.c \
+SRC_FILES =	init_window.c \
+			main.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
@@ -18,10 +20,10 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJ) 
-	$(CC) $(CFLAGS) -o $@ $^ -lX11
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ -lX11
 
 debug: fclean
 	$(MAKE) CFLAGS="$(DFLAGS)" all
