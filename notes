@@ -1,0 +1,11 @@
+terminal needs to create a pseudo terminal which is basically two fds
+-a parent
+-a child
+
+then it needs to fork a child process and launch a shell in it
+
+//this can either be achieved with openpty and execve or forkpty
+
+the terminal emulator will then get the user input via x11 events, pass it to the child fd
+the child process (most certainly a shell) will use it and output something
+the emulator will draw according to that output

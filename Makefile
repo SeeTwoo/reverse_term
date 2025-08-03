@@ -7,7 +7,8 @@ SRC_DIR = src
 SRC_FILES =	destroy_term.c \
 			init_event.c \
 			init_window.c \
-			main.c
+			main.c \
+			term_runtime.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

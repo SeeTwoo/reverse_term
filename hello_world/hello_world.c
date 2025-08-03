@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_term.c                                     :+:      :+:    :+:   */
+/*   hello_world.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 02:33:19 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 04:02:18 by seetwoo          ###   ########.fr       */
+/*   Created: 2025/08/03 05:08:30 by seetwoo           #+#    #+#             */
+/*   Updated: 2025/08/03 05:47:43 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include <stdio.h>
 
-void	destroy_term(t_term *term) {
-	XUnloadFont(term->display, term->font->fid);
-	XFreeGC(term->display, term->gc);
-	XDestroyWindow(term->display, term->win);
-	XCloseDisplay(term->display);
+int	main(void) {
+	printf("hello, anton !");
+	return (0);
 }
