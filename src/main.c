@@ -6,7 +6,7 @@
 /*   By: seetwoo <waltibee@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 01:44:54 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 02:31:12 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/03 03:13:11 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,8 @@ int	main(void) {
 	t_term	term;
 	
 	if (init_window(&term) == 1)
-		return (1);
-	XSelectInput(
-		term.display, term.win,
-		ExposureMask | KeyPressMask | ButtonPressMask | StructureNotifyMask
-	);
-	term.wm_delete = XInternAtom(term.display, "WM_DELETE_WINDEW", False);
-	XSetWMProtocols(term.display, term.win, &term.wm_delete, 1);
+		return (EXIT_FAILURE);
+	init_event(&term);
 	XMapWindow(term.display, term.win);
 	XFlush(term.display);
 	while (1) {
@@ -32,7 +27,6 @@ int	main(void) {
 		if (term.event.type == KeyPress || term.event.type == ButtonPress)
 			break ;
 	}
-	XDestroyWindow(term.display, term.win);
-	XCloseDisplay(term.display);
+	destroy_term(&term);
 	return (0);
 }

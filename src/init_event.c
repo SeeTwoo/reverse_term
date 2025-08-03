@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   term_funcs.h                                       :+:      :+:    :+:   */
+/*   init_event.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 02:25:48 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 03:13:40 by seetwoo          ###   ########.fr       */
+/*   Created: 2025/08/03 02:44:55 by seetwoo           #+#    #+#             */
+/*   Updated: 2025/08/03 02:47:35 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TERM_FUNCS_H
-# define TERM_FUNCS_H
+#include "reverse_term.h"
 
-int		init_window(t_term *term);
-int		init_event(t_term *term);
-void	destroy_term(t_term *term);
-
-#endif
+int	init_event(t_term *term)
+{
+	XSelectInput(term->display, term->win,
+		ExposureMask | KeyPressMask | ButtonPressMask | StructureNotifyMask);
+	term->wm_delete = XInternAtom(term->display, "WM_DELETE_WINDOW", False);
+	XSetWMProtocols(term->display, term->win, &term->wm_delete, 1);
+	return (SUCCESS);
+}

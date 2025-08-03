@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:22:25 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 02:30:50 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/03 02:42:04 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	init_window(t_term *term)
 {
 	term->display = XOpenDisplay(NULL);
 	if (!term->display)
-		return (1);
+		return (FAILURE);
 	term->screen = DefaultScreen(term->display);
 	term->root = RootWindow(term->display, term->screen);
 	term->win = XCreateSimpleWindow(term->display, term->root,
@@ -26,5 +26,5 @@ int	init_window(t_term *term)
 		WhitePixel(term->display, term->screen),
 		BlackPixel(term->display, term->screen)
 	);
-	return (0);
+	return (SUCCESS);
 }

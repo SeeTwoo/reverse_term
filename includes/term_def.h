@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   term_funcs.h                                       :+:      :+:    :+:   */
+/*   term_def.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 02:25:48 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 03:13:40 by seetwoo          ###   ########.fr       */
+/*   Created: 2025/08/03 02:39:00 by seetwoo           #+#    #+#             */
+/*   Updated: 2025/08/03 02:43:10 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TERM_FUNCS_H
-# define TERM_FUNCS_H
+#ifndef TERM_DEF_H
+# define TERM_DEF_H
 
-int		init_window(t_term *term);
-int		init_event(t_term *term);
-void	destroy_term(t_term *term);
+typedef enum {
+	SUCCESS = 0,
+	FAILURE = 1
+} e_return_status;
 
 #endif
