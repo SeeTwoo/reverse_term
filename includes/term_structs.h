@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/04 18:49:48 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/04 20:13:43 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ typedef struct s_draw	t_draw;
 typedef void			(*t_drawing_function)(t_term *term, t_draw *draw);
 
 struct s_term {
+	pid_t				shell_pid;
 	Display				*display;
 	Window				root;
 	Window				win;

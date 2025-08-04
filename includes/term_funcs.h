@@ -6,13 +6,14 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:25:48 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/04 18:46:11 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/04 20:18:32 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERM_FUNCS_H
 # define TERM_FUNCS_H
 
+void	exit_term(t_term *term);
 void	handle_keypress(t_term *term);
 int		init_window(t_term *term);
 int		init_event(t_term *term);

@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 03:23:06 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 17:02:20 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/04 20:15:51 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	fill_output(t_term *term) {
 }
 
 void	term_runtime(t_term *term) {
-	pid_t	pid;
 	int		x_fd;
 	int		max_fd;
 	fd_set	read_fds;
@@ -48,8 +47,8 @@ void	term_runtime(t_term *term) {
 	term->out_len = 0;
 	term->output[0] = '\0';
 	XMapWindow(term->display, term->win);
-	pid = forkpty(&term->parent_fd, NULL, NULL, NULL);
-	if (pid == 0)
+	term->shell_pid = forkpty(&term->parent_fd, NULL, NULL, NULL);
+	if (term->shell_pid == 0)
 		launch_shell(term);
 	x_fd = ConnectionNumber(term->display);
 	max_fd = (x_fd > term->parent_fd ? x_fd : term->parent_fd) + 1;
@@ -74,7 +73,7 @@ void	term_runtime(t_term *term) {
 			do {
 				XNextEvent(term->display, &term->event);
 				if (term->event.type == ClientMessage && (Atom)term->event.xclient.data.l[0] == term->wm_delete)
-					exit(EXIT_SUCCESS);
+					exit_term(term);
 				if (term->event.type == KeyPress)
 					handle_keypress(term);
 				if (term->event.type == Expose)

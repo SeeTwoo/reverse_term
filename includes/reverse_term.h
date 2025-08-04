@@ -6,7 +6,7 @@
 /*   By: seetwoo <waltibee@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 01:41:54 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/03 14:21:15 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/04 20:20:58 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include <unistd.h>
 # include <X11/Xlib.h>
 # include <X11/Xutil.h>
