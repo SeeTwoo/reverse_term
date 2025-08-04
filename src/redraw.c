@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:02:27 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/04 21:33:05 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/04 21:40:20 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ void	draw_newline(t_term *term, t_draw *draw) {
 	(void)term;
 	draw->x = 0;
 	draw->y++;
+	draw->i++;
+}
+
+void	draw_tab(t_term *term, t_draw *draw) {
+	(void)term;
+	draw->x += SPACES_PER_TAB - (draw->x % SPACES_PER_TAB);
 	draw->i++;
 }
 

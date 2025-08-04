@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:25:48 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/04 20:18:32 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/04 21:41:27 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	draw_printable(t_term *term, t_draw *draw);
 void	draw_vertical_tab(t_term *term, t_draw *draw);
 void	draw_carriage_return(t_term *term, t_draw *draw);
 void	draw_newline(t_term *term, t_draw *draw);
+void	draw_tab(t_term *term, t_draw *draw);
 void	parse_escape_code(t_term *term, t_draw *draw);
 void	draw_nothing(t_term *term, t_draw *draw);
 

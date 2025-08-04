@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:55:00 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/04 18:40:31 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/04 21:40:57 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	init_drawing_function_pointers(t_term *term) {
 			term->drawing_functions[i] = draw_carriage_return;
 		else if ((char)i == '\n')
 			term->drawing_functions[i] = draw_newline;
+		else if ((char)i == '\t')
+			term->drawing_functions[i] = draw_tab;
 		else if ((char)i == '\x1b')
 			term->drawing_functions[i] = parse_escape_code;
 		else

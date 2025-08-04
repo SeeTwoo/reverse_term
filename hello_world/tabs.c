@@ -1,24 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   term_def.h                                         :+:      :+:    :+:   */
+/*   tabs.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 02:39:00 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/04 21:41:54 by seetwoo          ###   ########.fr       */
+/*   Created: 2025/08/04 21:42:50 by seetwoo           #+#    #+#             */
+/*   Updated: 2025/08/04 21:43:33 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TERM_DEF_H
-# define TERM_DEF_H
+#include <stdio.h>
 
-# define MARGIN 5
-# define SPACES_PER_TAB 4
-
-typedef enum {
-	SUCCESS = 0,
-	FAILURE = 1
-} e_return_status;
-
-#endif
+int	main(void) {
+	printf("1\t2\t3\n");
+	return (0);
+}
