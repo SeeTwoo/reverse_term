@@ -6,34 +6,39 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:02:27 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/04 20:02:09 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/04 21:33:05 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reverse_term.h"
 
 void	draw_printable(t_term *term, t_draw *draw) {
-	XDrawString(term->display, term->win, term->gc, draw->x, draw->y, &(term->output[draw->i]), 1);
-	draw->x += draw->character_width;
+	int	x;
+	int	y;
+
+	x = (draw->x * draw->character_width) + MARGIN;
+	y = (draw->y * draw->line_height) + draw->line_height;
+	XDrawString(term->display, term->win, term->gc, x, y, &(term->output[draw->i]), 1);
+	draw->x++;
 	draw->i++;
 }
 
 void	draw_vertical_tab(t_term *term, t_draw *draw) {
 	(void)term;
-	draw->y += draw->line_height;
+	draw->y++;
 	draw->i++;
 }
 
 void	draw_carriage_return(t_term *term, t_draw *draw) {
 	(void)term;
-	draw->x = 5;
+	draw->x = 0;
 	draw->i++;
 }
 
 void	draw_newline(t_term *term, t_draw *draw) {
 	(void)term;
-	draw->x = 5;
-	draw->y += draw->line_height;
+	draw->x = 0;
+	draw->y++;
 	draw->i++;
 }
 
@@ -58,11 +63,10 @@ void	redraw(t_term *term) {
 	print_current_buffer(term);
 	XClearWindow(term->display, term->win);
 	draw.i = 0;
-	draw.x = 5;
+	draw.x = 0;
 	draw.y = 0;
 	draw.line_height = term->font->ascent + term->font->descent;
 	draw.character_width = term->font->max_bounds.width;
-	draw.y += draw.line_height;
 	while (term->output[draw.i])
 		term->drawing_functions[(int)term->output[draw.i]](term, &draw);
 	XFlush(term->display);
