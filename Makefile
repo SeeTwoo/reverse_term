@@ -6,6 +6,7 @@ INCLUDES = -Iincludes
 SRC_DIR = src
 SRC_FILES =	destroy_term.c \
 			handle_keypress.c \
+			init_drawing_function_pointers.c \
 			init_event.c \
 			init_window.c \
 			main.c \
