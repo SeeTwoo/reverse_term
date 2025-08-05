@@ -6,12 +6,12 @@ INCLUDES = -Iincludes
 SRC_DIR = src
 SRC_FILES =	destroy_term.c \
 			exit_term.c \
+			fill_grid.c \
 			handle_keypress.c \
-			init_drawing_function_pointers.c \
-			init_event.c \
+			init_grid.c \
+			init_pty.c \
 			init_window.c \
 			main.c \
-			print_current_buffer.c \
 			redraw.c \
 			term_runtime.c
 

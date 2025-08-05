@@ -1,36 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_drawing_function_pointers.c                   :+:      :+:    :+:   */
+/*   init_grid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:55:00 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/04 21:40:57 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/05 09:45:11 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reverse_term.h"
 
-void	init_drawing_function_pointers(t_term *term) {
+void	init_grid_function_pointers(t_grid *grid) {
 	int	i;
 
 	i = 0;
 	while (i < 256) {
 		if (isprint((char)i))
-			term->drawing_functions[i] = draw_printable;
+			grid->grid_functions[i] = grid_printable;
 		else if ((char)i == '\v')
-			term->drawing_functions[i] = draw_vertical_tab;
+			grid->grid_functions[i] = grid_vertical_tab;
 		else if ((char)i == '\r')
-			term->drawing_functions[i] = draw_carriage_return;
+			grid->grid_functions[i] = grid_carriage_return;
 		else if ((char)i == '\n')
-			term->drawing_functions[i] = draw_newline;
+			grid->grid_functions[i] = grid_newline;
 		else if ((char)i == '\t')
-			term->drawing_functions[i] = draw_tab;
+			grid->grid_functions[i] = grid_tab;
 		else if ((char)i == '\x1b')
-			term->drawing_functions[i] = parse_escape_code;
+			grid->grid_functions[i] = parse_escape_code;
 		else
-			term->drawing_functions[i] = draw_nothing;
+			grid->grid_functions[i] = grid_nothing;
 		i++;
 	}
+}
+
+void	init_grid(t_grid *grid) {
+	grid->x = 0;
+	grid->y = 0;
+	memset(grid->grid, ' ', 25 * 80);
+	init_grid_function_pointers(grid);
 }
