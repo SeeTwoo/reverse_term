@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 06:11:13 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 18:15:52 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/05 20:01:17 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	scroll_grid_up(t_grid *grid, char *buffer, int *i) {
 		y++;
 	}
 	memset(grid->grid[24], ' ', 80);
+	grid->full_redraw = true;
 }
 
 void	grid_printable(t_grid *grid, char *buffer, int *i) {

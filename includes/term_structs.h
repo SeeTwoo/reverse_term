@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 19:10:54 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/05 20:00:53 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ struct s_grid {
 	int				y;
 	int				x_draw;
 	int				y_draw;
-	int				tile_height;
-	int				tile_width;
+	bool			full_redraw;
 	t_grid_function	grid_functions[256];
 };
 

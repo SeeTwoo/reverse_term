@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:25:48 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 19:11:12 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/05 20:12:35 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	init_pty(t_pty *pty);
 
 int		init_window(t_x11 *x11);
 
-void	redraw(t_term *term, t_x11 *x11, t_grid *grid);
+void	redraw(t_x11 *x11, t_grid *grid);
 
-void	term_runtime(t_term *term, t_x11 *x11, t_pty *pty, t_grid *grid);
+void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid);
 
 void	grid_printable(t_grid *grid, char *buffer, int *i);
 void	grid_vertical_tab(t_grid *grid, char *buffer, int *i);
