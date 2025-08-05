@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 06:11:13 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 18:02:45 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/05 18:15:52 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,15 @@ void	grid_printable(t_grid *grid, char *buffer, int *i) {
 	(*i)++;
 }
 
+void	grid_backspace(t_grid *grid, char *buffer, int *i) {
+	(void)buffer;
+	grid->x--;
+	grid->grid[grid->y][grid->x] = ' ';
+	(*i)++;
+}
+
 void	grid_vertical_tab(t_grid *grid, char *buffer, int *i) {
 	(void)buffer;
-	(void)i;
 	if (grid->y == 24) {
 		scroll_grid_up(grid, buffer, i);
 		(*i)++;
@@ -49,14 +55,12 @@ void	grid_vertical_tab(t_grid *grid, char *buffer, int *i) {
 
 void	grid_carriage_return(t_grid *grid, char *buffer, int *i) {
 	(void)buffer;
-	(void)i;
 	grid->x = 0;
 	(*i)++;
 }
 
 void	grid_newline(t_grid *grid, char *buffer, int *i) {
 	(void)buffer;
-	(void)i;
 	if (grid->y == 24) {
 		scroll_grid_up(grid, buffer, i);
 		(*i)++;
@@ -70,7 +74,6 @@ void	grid_newline(t_grid *grid, char *buffer, int *i) {
 
 void	grid_tab(t_grid *grid, char *buffer, int *i) {
 	(void)buffer;
-	(void)i;
 	grid->x += SPACES_PER_TAB - (grid->x % SPACES_PER_TAB);
 	(*i)++;
 }
@@ -86,7 +89,6 @@ void	parse_escape_code(t_grid *grid, char *buffer, int *i) {
 void	grid_nothing(t_grid *grid, char *buffer, int *i) {
 	(void)grid;
 	(void)buffer;
-	(void)i;
 	(*i)++;
 }
 
