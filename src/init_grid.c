@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:55:00 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 09:45:11 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/05 11:15:29 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 void	init_grid_function_pointers(t_grid *grid) {
 	int	i;
 
+	i = -1;
+	while (++i < 256)
+		grid->grid_functions[i] = grid_nothing;
 	i = 0;
 	while (i < 256) {
 		if (isprint((char)i))
@@ -29,8 +32,6 @@ void	init_grid_function_pointers(t_grid *grid) {
 			grid->grid_functions[i] = grid_tab;
 		else if ((char)i == '\x1b')
 			grid->grid_functions[i] = parse_escape_code;
-		else
-			grid->grid_functions[i] = grid_nothing;
 		i++;
 	}
 }
