@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 08:07:43 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/05 19:10:54 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ struct s_x11 {
 	Atom				wm_delete;
 	GC					gc;
 	XFontStruct			*font;
+	int					tile_height;
+	int					tile_width;
 };
 
 struct s_pty {
@@ -42,6 +44,10 @@ struct s_grid {
 	char			grid[25][80];
 	int				x;
 	int				y;
+	int				x_draw;
+	int				y_draw;
+	int				tile_height;
+	int				tile_width;
 	t_grid_function	grid_functions[256];
 };
 
