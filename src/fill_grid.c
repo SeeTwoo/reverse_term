@@ -6,103 +6,111 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 06:11:13 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 20:01:17 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/06 22:48:26 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reverse_term.h"
 
-void	scroll_grid_up(t_grid *grid, char *buffer, int *i) {
+void	scroll_grid_up(t_grid *grid) {
 	int	y;
 
-	(void)buffer;
-	(void)i;
 	y = 0;
-	while (y < 24) {
-		memmove(grid->grid[y], grid->grid[y + 1], 80);
+	while (y < GRID_H - 1) {
+		memmove(grid->grid[y], grid->grid[y + 1], GRID_W);
 		y++;
 	}
-	memset(grid->grid[24], ' ', 80);
+	memset(grid->grid[GRID_H - 1], ' ', GRID_W);
 	grid->full_redraw = true;
+	grid->x = 0;
 }
 
-void	grid_printable(t_grid *grid, char *buffer, int *i) {
-	grid->grid[grid->y][grid->x] = buffer[*i];
-	if (grid->x == 79) {
-		grid_newline(grid, buffer, i);
-	} else {
-		grid->x++;
+int	grid_printable(t_grid *grid, char *buffer) {
+	if (grid->x >= GRID_W - 1 && grid->y < GRID_H - 1) {
+		grid->x = 0;
+		grid->y++;
+	} else if (grid->x >= GRID_W - 1 && grid->y >= GRID_H - 1) {
+		scroll_grid_up(grid);
 	}
-	(*i)++;
+	new_render_op(grid, PRINTABLE, grid->x, grid->y);
+	grid->grid[grid->y][grid->x] = *buffer;
+	grid->x++;
+	return (1);
 }
 
-void	grid_backspace(t_grid *grid, char *buffer, int *i) {
+int	grid_backspace(t_grid *grid, char *buffer) {
 	(void)buffer;
 	grid->x--;
 	grid->grid[grid->y][grid->x] = ' ';
-	(*i)++;
+	new_render_op(grid, BACKSPACE, grid->x, grid->y);
+	return (1);
 }
 
-void	grid_vertical_tab(t_grid *grid, char *buffer, int *i) {
+int	grid_vertical_tab(t_grid *grid, char *buffer) {
 	(void)buffer;
-	if (grid->y == 24) {
-		scroll_grid_up(grid, buffer, i);
-		(*i)++;
-		return ;
+	if (grid->y >= GRID_H - 1) {
+		scroll_grid_up(grid);
+		return (1);
 	}
 	grid->y++;
-	(*i)++;
+	return (1);
 }	
 
-void	grid_carriage_return(t_grid *grid, char *buffer, int *i) {
+int	grid_carriage_return(t_grid *grid, char *buffer) {
 	(void)buffer;
 	grid->x = 0;
-	(*i)++;
+	return (1);
 }
 
-void	grid_newline(t_grid *grid, char *buffer, int *i) {
+int	grid_newline(t_grid *grid, char *buffer) {
 	(void)buffer;
-	if (grid->y == 24) {
-		scroll_grid_up(grid, buffer, i);
-		(*i)++;
+	if (grid->y >= GRID_H - 1) {
+		scroll_grid_up(grid);
 		grid->x = 0;
-		return ;
+		return (1);
 	}
 	grid->y++;
 	grid->x = 0;
-	(*i)++;
+	return (1);
 }
 
-void	grid_tab(t_grid *grid, char *buffer, int *i) {
+int	grid_tab(t_grid *grid, char *buffer) {
 	(void)buffer;
-	grid->x += SPACES_PER_TAB - (grid->x % SPACES_PER_TAB);
-	(*i)++;
+	if (GRID_W - (grid->x + 1) < SPACES_PER_TAB && grid->y < GRID_H - 1) {
+		grid->y++;
+		grid->x = 0;
+		return (1);
+	} else if (GRID_W - (grid->x + 1) < SPACES_PER_TAB && grid->y >= GRID_H - 1) {
+		scroll_grid_up(grid) ;
+		return (1);
+	}
+	new_render_op(grid, PRINTABLE, grid->x, grid->y);
+	grid->grid[grid->y][grid->x] = ' ';
+	grid->x++;
+	while (grid->x % SPACES_PER_TAB != 0) {
+		new_render_op(grid, PRINTABLE, grid->x, grid->y);
+		grid->grid[grid->y][grid->x] = ' ';
+		grid->x++;
+	}
+	return (1);
 }
 
-void	parse_escape_code(t_grid *grid, char *buffer, int *i) {
+int	parse_escape_code(t_grid *grid, char *buffer) {
+	int	i;
+
 	(void)grid;
-	while (buffer[*i] && !isalpha(buffer[*i]))
-		(*i)++;
-	if (buffer[*i])
-		(*i)++;
+	i = 0;
+	while (buffer[i] && !isalpha(buffer[i]))
+		i++;
+	if (buffer[i])
+		i++;
+	return (i);
 }
 
-void	grid_nothing(t_grid *grid, char *buffer, int *i) {
+int	grid_nothing(t_grid *grid, char *buffer) {
 	(void)grid;
 	(void)buffer;
-	(*i)++;
-}
-
-//to replace with something along the line of get next line that could handle
-//something arbitraryly large
-int	get_output(t_pty *pty, char *buffer) {
-	int	bytes_read;
-
-	bytes_read = read(pty->parent_fd, buffer, 1023);
-	if (bytes_read <= 0)
-		return (bytes_read);
-	buffer[bytes_read] = '\0';
-	return (bytes_read);
+	return (1);
 }
 
 int	fill_grid(t_pty *pty, t_grid *grid) {
@@ -112,12 +120,10 @@ int	fill_grid(t_pty *pty, t_grid *grid) {
 	if (get_output(pty, buffer) <= 0)
 		return (FAILURE);
 	i = 0;
-	while (buffer[i]) {
-		if (!grid->grid_functions[(int)buffer[i]]) {
-			printf("c = %c (\\x%02x\n", buffer[i], (int)buffer[i]);
-			exit(EXIT_FAILURE);
-		}
-		grid->grid_functions[(int)buffer[i]](grid, buffer, &i);
-	}
+	bzero(grid->operations, sizeof(grid->operations));
+	grid->current_op = grid->operations;
+	while (buffer[i])
+		i += grid->grid_functions[(int)buffer[i]](grid, &buffer[i]);
+	grid->current_op->type = END_LIST;
 	return (SUCCESS);
 }

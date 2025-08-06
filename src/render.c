@@ -1,16 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redraw.c                                           :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:02:27 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 20:15:07 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/06 22:54:45 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reverse_term.h"
+
+void	render_printable(t_x11 *x11, t_grid *grid, t_render_op *op) {
+	int		x;
+	int		y;
+	char	*c;
+
+	x = (op->x * x11->tile_width) + MARGIN;
+	y = (op->y * x11->tile_height) + x11->tile_height;
+	c = &grid->grid[op->y][op->x];
+	XDrawString(x11->display, x11->win, x11->gc, x, y, c, 1);
+}
+
+void	render_backspace(t_x11 *x11, t_render_op *op) {
+	int	x;
+	int	y;
+
+	printf("x = %d and y = %d\n", op->x, op->y);
+	x = (op->x * x11->tile_width) + MARGIN;
+	y = op->y * x11->tile_height;
+	XClearArea(x11->display, x11->win, x, y, x11->tile_width, x11->tile_height, false);
+}
 
 void	full_redraw(t_x11 *x11, t_grid *grid) {
 	int	y;
@@ -20,7 +41,7 @@ void	full_redraw(t_x11 *x11, t_grid *grid) {
 	while (y < GRID_H) {
 		XDrawString(x11->display, x11->win, x11->gc,
 			MARGIN, (y * x11->tile_height) + x11->tile_height,
-			grid->grid[y], GRID_W
+			grid->grid[y], strnlen(grid->grid[y], GRID_W)
 		);
 		y++;
 	}
@@ -28,20 +49,20 @@ void	full_redraw(t_x11 *x11, t_grid *grid) {
 	grid->full_redraw = false;
 }
 
-void	redraw(t_x11 *x11, t_grid *grid) {
-	int	x;
-	int y;
+void	render(t_x11 *x11, t_grid *grid) {
+	int	i;
 
-	printf("hello\n");
 	if (grid->full_redraw == true) {
 		full_redraw(x11, grid);
 		return ;
 	}
-	x = (grid->x_draw * x11->tile_width) + MARGIN;
-	y = (grid->y_draw * x11->tile_height) + x11->tile_height;
-	XDrawString(x11->display, x11->win, x11->gc,
-		x, y, &grid->grid[grid->y_draw][grid->x_draw], GRID_W - grid->x_draw);
-	grid->x_draw = grid->x;
-	grid->y_draw = grid->y;
+	i = 0;
+	while (grid->operations[i].type != END_LIST) {
+		if (grid->operations[i].type == PRINTABLE)
+			render_printable(x11, grid, &grid->operations[i]);
+		else if (grid->operations[i].type == BACKSPACE)
+			render_backspace(x11, &grid->operations[i]);
+		i++;
+	}
 	XFlush(x11->display);
 }

@@ -7,12 +7,14 @@ SRC_DIR = src
 SRC_FILES =	destroy_term.c \
 			exit_term.c \
 			fill_grid.c \
+			get_output.c \
 			handle_keypress.c \
 			init_grid.c \
 			init_pty.c \
 			init_window.c \
 			main.c \
-			redraw.c \
+			new_render_op.c \
+			render.c \
 			term_runtime.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

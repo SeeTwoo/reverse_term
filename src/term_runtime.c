@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 03:23:06 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 20:12:20 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/06 07:15:09 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 		if (FD_ISSET(pty->parent_fd, &read_fds)) {
 			if (fill_grid(pty, grid) == FAILURE)
 				exit(EXIT_FAILURE);
-			redraw(x11, grid);
+			render(x11, grid);
 		}
 
 		if (FD_ISSET(x_fd, &read_fds)) {
@@ -51,7 +51,7 @@ void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 				if (x11->event.type == KeyPress)
 					handle_keypress(x11, pty);
 				if (x11->event.type == Expose)
-					redraw(x11, grid);
+					render(x11, grid);
 			} while (XPending(x11->display));
 		}
 	}

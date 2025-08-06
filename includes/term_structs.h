@@ -6,21 +6,20 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 20:00:53 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/06 23:25:10 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERM_STRUCTS_H
 # define TERM_STURCTS_H
 
-typedef struct s_term		t_term;
 typedef struct s_x11		t_x11;
 typedef struct s_pty		t_pty;
 typedef struct s_grid		t_grid;
+typedef struct s_render_op	t_render_op;
 
-typedef struct s_draw		t_draw;
-
-typedef void				(*t_grid_function)(t_grid *grid, char *buffer, int *i);
+typedef int					(*t_grid_function)(t_grid *grid, char *buffer);
+typedef void				(t_render_function)(t_x11 *x11, t_grid *grid);
 
 struct s_x11 {
 	Display				*display;
@@ -33,6 +32,7 @@ struct s_x11 {
 	XFontStruct			*font;
 	int					tile_height;
 	int					tile_width;
+	//t_render_function	render_functions[7];
 };
 
 struct s_pty {
@@ -40,29 +40,26 @@ struct s_pty {
 	int					parent_fd;
 };
 
+typedef enum {
+	PRINTABLE,
+	BACKSPACE,
+	END_LIST
+} e_render_op_tye;
+
+struct s_render_op {
+	int	type;
+	int	x;
+	int y;
+};
+
 struct s_grid {
 	char			grid[25][80];
 	int				x;
 	int				y;
-	int				x_draw;
-	int				y_draw;
 	bool			full_redraw;
 	t_grid_function	grid_functions[256];
-};
-
-struct s_term {
-	t_x11	*x11;
-	t_pty	*pty;
-	t_grid	*grid;
-};
-
-struct s_draw {
-	int		i;
-	int		x;
-	int		y;
-	int		line_height;
-	int		character_width;
-	size_t	line_len;
+	t_render_op		operations[4096];
+	t_render_op		*current_op;
 };
 
 #endif
