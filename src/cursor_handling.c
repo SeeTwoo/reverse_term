@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 00:13:04 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 02:13:06 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 03:15:46 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int wipe_cursor(t_x11 *x11, int cursor_x, int cursor_y) {
 	int	y;
 
 	x = (cursor_x * x11->tile_width) + MARGIN;
-	y = cursor_y * x11->tile_height;
+	y = cursor_y * x11->tile_height + x11->font->descent;
 	XClearArea(x11->display, x11->win, x, y, x11->tile_width, x11->tile_height, false);
 	XFlush(x11->display);
 	return (0);
@@ -28,7 +28,7 @@ int	cursor_blink_on(t_x11 *x11, t_grid *grid) {
 	int	y;
 
 	x = (grid->x * x11->tile_width) + MARGIN;
-	y = grid->y * x11->tile_height;
+	y = grid->y * x11->tile_height + x11->font->descent;
 	XFillRectangle(x11->display, x11->win, x11->gc, x, y, x11->tile_width, x11->tile_height);
 	x11->cursor_blink = false;
 	XFlush(x11->display);
