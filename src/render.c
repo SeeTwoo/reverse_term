@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:02:27 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 08:13:03 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 10:33:18 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	render(t_x11 *x11, t_grid *grid) {
 		return ;
 	}
 	i = 0;
-	while (grid->operations[i].type != END_LIST) {
+	while (grid->operations[i].type != END_LIST && i < 4096) {
 		if (grid->operations[i].type == PRINTABLE)
 			render_printable(x11, grid, &grid->operations[i]);
 		else if (grid->operations[i].type == BACKSPACE)
