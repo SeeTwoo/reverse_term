@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:02:27 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 03:09:22 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 03:18:27 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	render_backspace(t_x11 *x11, t_render_op *op) {
 	int	y;
 
 	x = (op->x * x11->tile_width) + MARGIN;
-	y = op->y * x11->tile_height;
+	y = op->y * x11->tile_height + x11->font->descent;
 	XClearArea(x11->display, x11->win, x, y, x11->tile_width * 2, x11->tile_height, false);
 }
 
