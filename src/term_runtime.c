@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 03:23:06 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/06 07:15:09 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 02:49:51 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,35 @@ void	init_gc(t_x11 *x11) {
 }
 
 void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
-	int		x_fd;
-	int		max_fd;
-	fd_set	read_fds;
+	struct timeval	tv;
+	int				x_fd;
+	int				max_fd;
+	int				select_ret;
+	fd_set			read_fds;
 
 	init_gc(x11);
 	XMapWindow(x11->display, x11->win);
 	x_fd = ConnectionNumber(x11->display);
 	max_fd = (x_fd > pty->parent_fd ? x_fd : pty->parent_fd) + 1;
+	x11->cursor_blink = true;
 	while (1) {
+		tv.tv_sec = 0;
+		tv.tv_usec = 500000;
 		FD_ZERO(&read_fds);
 		FD_SET(x_fd, &read_fds);
 		FD_SET(pty->parent_fd, &read_fds);
 
-		if (select(max_fd, &read_fds, NULL, NULL, NULL) == -1) {
+		select_ret = select(max_fd, &read_fds, NULL, NULL, &tv);
+		if (select_ret == -1) {
 			perror("select");
 			exit(EXIT_FAILURE);
+		} else if (select_ret == 0) {
+			cursor_handling(x11, grid);
+			continue ;
 		}
 
 		if (FD_ISSET(pty->parent_fd, &read_fds)) {
+			wipe_cursor(x11, grid->x, grid->y);
 			if (fill_grid(pty, grid) == FAILURE)
 				exit(EXIT_FAILURE);
 			render(x11, grid);

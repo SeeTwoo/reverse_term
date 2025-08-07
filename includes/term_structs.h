@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/06 23:25:10 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 00:11:56 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@ typedef int					(*t_grid_function)(t_grid *grid, char *buffer);
 typedef void				(t_render_function)(t_x11 *x11, t_grid *grid);
 
 struct s_x11 {
-	Display				*display;
-	Window				root;
-	Window				win;
-	int					screen;
-	XEvent				event;
-	Atom				wm_delete;
-	GC					gc;
-	XFontStruct			*font;
-	int					tile_height;
-	int					tile_width;
-	//t_render_function	render_functions[7];
+	Display		*display;
+	Window		root;
+	Window		win;
+	int			screen;
+	XEvent		event;
+	Atom		wm_delete;
+	GC			gc;
+	XFontStruct	*font;
+	int			tile_height;
+	int			tile_width;
+	bool		cursor_blink;
 };
 
 struct s_pty {

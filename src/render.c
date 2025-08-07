@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:02:27 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/06 22:54:45 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 01:59:21 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@ void	render_backspace(t_x11 *x11, t_render_op *op) {
 	int	x;
 	int	y;
 
-	printf("x = %d and y = %d\n", op->x, op->y);
 	x = (op->x * x11->tile_width) + MARGIN;
 	y = op->y * x11->tile_height;
-	XClearArea(x11->display, x11->win, x, y, x11->tile_width, x11->tile_height, false);
+	XClearArea(x11->display, x11->win, x, y, x11->tile_width * 2, x11->tile_height, false);
 }
 
 void	full_redraw(t_x11 *x11, t_grid *grid) {

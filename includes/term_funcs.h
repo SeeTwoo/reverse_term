@@ -6,12 +6,16 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:25:48 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/06 22:17:06 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 02:14:42 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERM_FUNCS_H
 # define TERM_FUNCS_H
+
+int		cursor_handling(t_x11 *x11, t_grid *grid);
+int		cursor_blink_off(t_x11 *x11, t_grid *grid);
+int		wipe_cursor(t_x11 *x11, int cursor_x, int cursor_y);
 
 void	destroy_term(t_x11 *x11);
 

@@ -6,7 +6,7 @@
 /*   By: seetwoo <waltibee@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 01:41:54 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 20:10:25 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 00:27:09 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/time.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>

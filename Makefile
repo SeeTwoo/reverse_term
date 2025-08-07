@@ -4,7 +4,8 @@ DFLAGS = $(CFLAGS) -g3
 INCLUDES = -Iincludes
 
 SRC_DIR = src
-SRC_FILES =	destroy_term.c \
+SRC_FILES =	cursor_handling.c \
+			destroy_term.c \
 			exit_term.c \
 			fill_grid.c \
 			get_output.c \
