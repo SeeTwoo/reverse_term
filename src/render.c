@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:02:27 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 01:59:21 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 03:09:22 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	full_redraw(t_x11 *x11, t_grid *grid) {
 	while (y < GRID_H) {
 		XDrawString(x11->display, x11->win, x11->gc,
 			MARGIN, (y * x11->tile_height) + x11->tile_height,
-			grid->grid[y], strnlen(grid->grid[y], GRID_W)
+			grid->grid[y], GRID_W
 		);
 		y++;
 	}

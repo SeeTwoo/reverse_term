@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 17:55:00 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/06 07:11:08 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 03:07:52 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void	init_grid_function_pointers(t_grid *grid) {
 void	init_grid(t_grid *grid) {
 	grid->x = 0;
 	grid->y = 0;
-	memset(grid->grid, '\0', 25 * 80);
+	memset(grid->grid, ' ', GRID_W * GRID_H);
 	init_grid_function_pointers(grid);
 }
