@@ -1,8 +1,9 @@
 make bash posix work
-	-make the clear command work (escape code parsing)
+	-make ctrl C like events reach the shell
 	-have arrows working for cursor position and readline history
 	-make a fill and flush logic for output reading and operation rendering
 	-try and find edge cases
+		printf "abcdef\b\b\b123" -- should output "abc123"
 	-have the code to the coding style
 make zsh work
 make vim work

@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 06:11:13 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 03:44:49 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 08:43:54 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	fill_grid(t_pty *pty, t_grid *grid) {
 	bzero(grid->operations, sizeof(grid->operations));
 	grid->current_op = grid->operations;
 	while (buffer[i])
-		i += grid->grid_functions[(int)buffer[i]](grid, &buffer[i]);
+		i += grid->grid_functions[(unsigned char)buffer[i]](grid, &buffer[i]);
 	grid->current_op->type = END_LIST;
 	return (SUCCESS);
 }
