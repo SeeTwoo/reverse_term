@@ -15,6 +15,7 @@ SRC_FILES =	cursor_handling.c \
 			init_window.c \
 			main.c \
 			new_render_op.c \
+			parse_escape_code.c \
 			render.c \
 			term_runtime.c
 

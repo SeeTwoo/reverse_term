@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 06:11:13 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 03:08:43 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 03:44:49 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,6 @@ int	grid_tab(t_grid *grid, char *buffer) {
 		grid->x++;
 	}
 	return (1);
-}
-
-int	parse_escape_code(t_grid *grid, char *buffer) {
-	int	i;
-
-	(void)grid;
-	i = 0;
-	while (buffer[i] && !isalpha(buffer[i]))
-		i++;
-	if (buffer[i])
-		i++;
-	return (i);
 }
 
 int	grid_nothing(t_grid *grid, char *buffer) {

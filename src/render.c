@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:02:27 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 03:18:27 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 08:13:03 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	render(t_x11 *x11, t_grid *grid) {
 			render_printable(x11, grid, &grid->operations[i]);
 		else if (grid->operations[i].type == BACKSPACE)
 			render_backspace(x11, &grid->operations[i]);
+		else if (grid->operations[i].type == ERASE_DISPLAY)
+			full_redraw(x11, grid);
 		i++;
 	}
 	XFlush(x11->display);

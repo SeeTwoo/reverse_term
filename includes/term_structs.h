@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 00:11:56 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 06:59:33 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ struct s_pty {
 typedef enum {
 	PRINTABLE,
 	BACKSPACE,
+	ERASE_DISPLAY,
 	END_LIST
 } e_render_op_tye;
 
