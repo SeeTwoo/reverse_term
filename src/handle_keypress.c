@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:50:42 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 07:31:47 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/09 08:25:25 by SeeTwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,15 @@ void	handle_keypress(t_x11 *x11, t_pty *pty) {
 		write(pty->parent_fd, "\r", 1);
 	} else if (keysym == XK_BackSpace) {
 		write(pty->parent_fd, "\x7f", 1);
+	} else if (keysym == XK_Tab) {
+		write(pty->parent_fd, "\x09", 1);
+	} else if (keysym == XK_Left) {
+		write(pty->parent_fd, "\x1b[D", 3);
+	} else if (keysym == XK_Right) {
+		write(pty->parent_fd, "\x1b[C", 3);
+	} else if (keysym == XK_Up) {
+		write(pty->parent_fd, "\x1b[A", 3);
+	} else if (keysym == XK_Down) {
+		write(pty->parent_fd, "\x1b[B", 3);
 	}
 }

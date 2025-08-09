@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 02:14:38 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 09:21:00 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/09 08:22:08 by SeeTwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int	get_output(t_pty *pty, char *buffer) {
 	if (bytes_read <= 0)
 		return (bytes_read);
 	buffer[bytes_read] = '\0';
-//	print_raw_buffer(buffer);
+	print_raw_buffer(buffer);
 	return (bytes_read);
 }

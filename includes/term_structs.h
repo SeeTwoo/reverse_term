@@ -6,12 +6,12 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 06:59:33 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 14:35:29 by SeeTwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERM_STRUCTS_H
-# define TERM_STURCTS_H
+# define TERM_STRUCTS_H
 
 typedef struct s_x11		t_x11;
 typedef struct s_pty		t_pty;

@@ -1,9 +1,14 @@
 make bash posix work
-	-make ctrl C like events reach the shell
-	-have arrows working for cursor position and readline history
-	-make a fill and flush logic for output reading and operation rendering
-	-try and find edge cases
+	- make ctrl C like events reach the shell
+	- have arrows working for cursor position and readline history
+	- make a fill and flush logic for output reading and operation rendering
+	- try and find edge cases
 		printf "abcdef\b\b\b123" -- should output "abc123"
-	-have the code to the coding style
+	- have the code to the coding style
+	- menu de tab si y a un doute, deja y a un retour a la ligne et franchement c est pas ouf ouf
+		puis en plus, ca devrait passer sur tout les choix comme bash en fait, ca me parait logique
+		- loser
+	- have a minimum size so we do not lose the window
+
 make zsh work
 make vim work

@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 03:49:04 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 08:12:24 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/09 09:44:44 by SeeTwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,21 @@
 # define DIGITS "0123456789"
 #endif
 
-int	get_args(char *buffer, int *args, int *i) {
-	int	j;
+#ifndef MAX_VT100_ARG_NBR
+# define MAX_VT100_ARG_NBR 16
+#endif
 
-	j = 0;
-	while (buffer[*i] && !isalpha(buffer[*i])) {
-		args[j] = atoi(&buffer[*i]);
-		while (isdigit(buffer[*i]))
-			(*i)++;
-		j++;
-		if (buffer[*i] == ';')
-			(*i)++;
-		if (isalpha(buffer[*i]))
-			break ;
-		if (!isdigit(buffer[*i]))
-			return (-1);
+int	get_args(char *buffer, int *args, int *ac) {
+	int	i;
+
+	*ac = 0;
+	while (1) {
+		if (isalpha(buffer[i]) || !isdigit(buffer[i]))
+			return (i);
+		args[ac] = strtoi_index(&buffer[i], &i);
+		if (buffer[i] == ';')
+			i++;
 	}
-	if (!isalpha(buffer[*i]))
-		return (-1);
-	return (j);
 }
 
 void	cursor_movement(t_grid *grid, int *args, int ac) {
@@ -65,16 +61,12 @@ void	erase_display(t_grid *grid, int *args, int ac) {
 
 int	parse_escape_code(t_grid *grid, char *buffer) {
 	int	i;
-	int	args[10];
+	int	args[MAX_VT100_ARG_NBR];
 	int	ac;
 
-	(void)grid;
-	i = 1;
-	if (buffer[i] == '[')
-		i++;
-	if (buffer[i] == '?')
-		i++;
-	else if (!buffer[i])
+	i = 0;
+	i += skip_to_args(buffer);
+	if (!buffer[i])
 		return (i);
 	ac = get_args(buffer, args, &i);
 	if (ac == -1)

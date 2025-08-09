@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:22:25 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/05 19:16:29 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/07 14:40:08 by SeeTwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	init_event(t_x11 *x11) {
 }
 
 int	init_font(t_x11 *x11) {
-	x11->font = XLoadQueryFont(x11->display, "fixed");
+	x11->font = XLoadQueryFont(x11->display, "-misc-fixed-*-*-*-*-20-*-*-*-*-*-*-*");
 	if (!x11->font)
 		return (FAILURE);
 	return (SUCCESS);
