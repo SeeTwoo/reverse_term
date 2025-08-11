@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 03:49:04 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/09 09:44:44 by SeeTwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 00:38:54 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ int	get_args(char *buffer, int *args, int *ac) {
 	int	i;
 
 	*ac = 0;
+	i = 0;
 	while (1) {
 		if (isalpha(buffer[i]) || !isdigit(buffer[i]))
 			return (i);
-		args[ac] = strtoi_index(&buffer[i], &i);
+		args[*ac] = strtoi_index(&buffer[i], &i);
 		if (buffer[i] == ';')
 			i++;
 	}
@@ -68,9 +69,10 @@ int	parse_escape_code(t_grid *grid, char *buffer) {
 	i += skip_to_args(buffer);
 	if (!buffer[i])
 		return (i);
-	ac = get_args(buffer, args, &i);
+	i = get_args(&buffer[i], args, &ac);
 	if (ac == -1)
 		return (i);
+	print_raw_buffer(&buffer[i]);
 	if (buffer[i] == 'H')
 		cursor_movement(grid, args, ac);
 	else if (buffer[i] == 'J')

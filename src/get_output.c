@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 02:14:38 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/09 08:22:08 by SeeTwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 00:36:11 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	print_raw_buffer(char *buffer) {
 			printf("\\x%02x", buffer[i]);
 		i++;
 	}
-	printf("\n");
+	printf("\n\n");
 }
 
 //to replace with something along the line of get next line that could handle
@@ -36,6 +36,6 @@ int	get_output(t_pty *pty, char *buffer) {
 	if (bytes_read <= 0)
 		return (bytes_read);
 	buffer[bytes_read] = '\0';
-	print_raw_buffer(buffer);
+//	print_raw_buffer(buffer);
 	return (bytes_read);
 }

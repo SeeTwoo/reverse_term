@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:25:48 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 02:14:42 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 00:35:51 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@ int		wipe_cursor(t_x11 *x11, int cursor_x, int cursor_y);
 
 void	destroy_term(t_x11 *x11);
 
+int		skip_to_args(char *buffer);
+int		strtoi_index(char const *s, int *index);
+
 void	exit_term(t_pty *pty, t_x11 *x11);
 
 int		fill_grid(t_pty *pty, t_grid *grid);
 
+void	print_raw_buffer(char *buffer);
 int		get_output(t_pty *pty, char *buffer);
 
 void	handle_keypress(t_x11 *x11, t_pty *pty);

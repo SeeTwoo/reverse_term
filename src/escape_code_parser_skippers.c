@@ -6,7 +6,7 @@
 /*   By: SeeTwoo <waltibee@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 09:15:50 by SeeTwoo           #+#    #+#             */
-/*   Updated: 2025/08/09 09:43:52 by SeeTwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 00:22:28 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	strtoi_index(char const *s, int *index) {
 int	skip_to_args(char *buffer) {
 	int	i;
 
-	i++;
+	i = 1;
 	if (buffer[i] == CSI)
 		i++;
 	if (buffer[i] == PRIVATE_QUESTION_MARK)
 		i++;
-	if (BUFFER[i] == PRIVATE_INFERIOR)
+	if (buffer[i] == PRIVATE_INFERIOR)
 		i++;
 	if (buffer[i] == PRIVATE_SUPERIOR)
 		i++;
