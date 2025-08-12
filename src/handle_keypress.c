@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:50:42 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/09 08:25:25 by SeeTwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 03:03:12 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ void	handle_keypress(t_x11 *x11, t_pty *pty) {
 
 	kev = &x11->event.xkey;
 	keysym = XLookupKeysym(kev, 0);
+	if ((kev->state & ControlMask) && (keysym == XK_c)) {
+		write(pty->parent_fd, "\x03", 1);
+		return ;
+	}
+	if ((kev->state & ControlMask) && (keysym == XK_d)) {
+		write(pty->parent_fd, "\x04", 1);
+		return ;
+	}
 	len = XLookupString(kev, buff, sizeof(buff), &keysym, NULL);
 	if (len > 0 && isprint(buff[0])) {
 		write(pty->parent_fd, buff, len);
