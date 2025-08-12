@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 06:11:13 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/12 02:31:49 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 13:23:06 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	grid_printable(t_grid *grid, char **buffer) {
 
 void	grid_backspace(t_grid *grid, char **buffer) {
 	grid->x--;
-	grid->grid[grid->y][grid->x] = ' ';
-	new_render_op(grid, BACKSPACE, grid->x, grid->y);
 	(*buffer)++;
 }
 

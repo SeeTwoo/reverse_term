@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:25:48 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/12 01:36:55 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 14:14:04 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,9 @@ void	grid_tab(t_grid *grid, char **buffer);
 void	grid_backspace(t_grid *grid, char **buffer);
 void	grid_nothing(t_grid *grid, char **buffer);
 void	parse_escape_code(t_grid *grid, char **buffer);
+
+void	cursor_movement(t_grid *grid, int *args, int ac);
+void	erase_display(t_grid *grid, int *args, int ac);
+void	erase_line(t_grid *grid, int *args, int ac);
 
 #endif

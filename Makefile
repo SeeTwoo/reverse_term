@@ -18,7 +18,8 @@ SRC_FILES =	cursor_handling.c \
 			new_render_op.c \
 			parse_escape_code.c \
 			render.c \
-			term_runtime.c
+			term_runtime.c \
+			VT100_commands.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

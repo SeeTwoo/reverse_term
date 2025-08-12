@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 17:02:27 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 10:33:18 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 14:20:24 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,29 @@
 void	render_printable(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	int		x;
 	int		y;
-	char	*c;
+	char	*s;
 
 	x = (op->x * x11->tile_width) + MARGIN;
 	y = (op->y * x11->tile_height) + x11->tile_height;
-	c = &grid->grid[op->y][op->x];
-	XDrawString(x11->display, x11->win, x11->gc, x, y, c, 1);
+	s = &grid->grid[op->y][op->x];
+	XDrawString(x11->display, x11->win, x11->gc, x, y, s, 1);
+	XFlush(x11->display);
 }
 
-void	render_backspace(t_x11 *x11, t_render_op *op) {
-	int	x;
-	int	y;
+void	render_line_erasing(t_x11 *x11, t_grid *grid, t_render_op *op) {
+	int		x;
+	int		y;
+	char	*s;
 
-	x = (op->x * x11->tile_width) + MARGIN;
-	y = op->y * x11->tile_height + x11->font->descent;
-	XClearArea(x11->display, x11->win, x, y, x11->tile_width * 2, x11->tile_height, false);
+	x = MARGIN;
+	y = op->y * x11->tile_height;
+	s = &grid->grid[op->y][0];
+	XClearArea(x11->display, x11->win,
+		x, y,
+		x11->tile_width * GRID_W, x11->tile_height,
+		false);
+	XDrawString(x11->display, x11->win, x11->gc, x, y + x11->tile_height, s, GRID_W);
+	XFlush(x11->display);
 }
 
 void	full_redraw(t_x11 *x11, t_grid *grid) {
@@ -59,10 +67,10 @@ void	render(t_x11 *x11, t_grid *grid) {
 	while (grid->operations[i].type != END_LIST && i < 4096) {
 		if (grid->operations[i].type == PRINTABLE)
 			render_printable(x11, grid, &grid->operations[i]);
-		else if (grid->operations[i].type == BACKSPACE)
-			render_backspace(x11, &grid->operations[i]);
 		else if (grid->operations[i].type == ERASE_DISPLAY)
 			full_redraw(x11, grid);
+		else if (grid->operations[i].type == ERASE_LINE)
+			render_line_erasing(x11, grid, &grid->operations[i]);
 		i++;
 	}
 	XFlush(x11->display);
