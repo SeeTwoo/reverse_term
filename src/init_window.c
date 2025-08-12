@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:22:25 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 14:40:08 by SeeTwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 14:33:49 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ int	init_font(t_x11 *x11) {
 	if (!x11->font)
 		return (FAILURE);
 	return (SUCCESS);
+}
+
+void	setup_minimal_size(t_x11 *x11, int window_width, int window_height) {
+	XSizeHints	hints;
+
+	hints.flags = PMinSize;
+	hints.min_width = window_width;
+	hints.min_height = window_height;
+	XSetWMNormalHints(x11->display, x11->win, &hints);
 }
 
 int	init_window(t_x11 *x11) {
@@ -50,5 +59,6 @@ int	init_window(t_x11 *x11) {
 		BlackPixel(x11->display, x11->screen)
 	);
 	init_event(x11);
+	setup_minimal_size(x11, window_width, window_height);
 	return (SUCCESS);
 }
