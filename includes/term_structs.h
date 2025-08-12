@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:06:20 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/07 14:35:29 by SeeTwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 01:07:49 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ typedef struct s_pty		t_pty;
 typedef struct s_grid		t_grid;
 typedef struct s_render_op	t_render_op;
 
-typedef int					(*t_grid_function)(t_grid *grid, char *buffer);
+typedef void				(*t_grid_function)(t_grid *grid, char **buffer);
 typedef void				(t_render_function)(t_x11 *x11, t_grid *grid);
 
 struct s_x11 {

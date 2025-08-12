@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 02:25:48 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/12 00:35:51 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 01:36:55 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		wipe_cursor(t_x11 *x11, int cursor_x, int cursor_y);
 
 void	destroy_term(t_x11 *x11);
 
-int		skip_to_args(char *buffer);
+void	skip_to_args(char **buffer);
 int		strtoi_index(char const *s, int *index);
 
 void	exit_term(t_pty *pty, t_x11 *x11);
@@ -43,13 +43,13 @@ void	render(t_x11 *x11, t_grid *grid);
 
 void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid);
 
-int grid_printable(t_grid *grid, char *buffer);
-int	grid_vertical_tab(t_grid *grid, char *buffer);
-int	grid_carriage_return(t_grid *grid, char *buffer);
-int	grid_newline(t_grid *grid, char *buffer);
-int	grid_tab(t_grid *grid, char *buffer);
-int	grid_backspace(t_grid *grid, char *buffer);
-int	grid_nothing(t_grid *grid, char *buffer);
-int	parse_escape_code(t_grid *grid, char *buffer);
+void	grid_printable(t_grid *grid, char **buffer);
+void	grid_vertical_tab(t_grid *grid, char **buffer);
+void	grid_carriage_return(t_grid *grid, char **buffer);
+void	grid_newline(t_grid *grid, char **buffer);
+void	grid_tab(t_grid *grid, char **buffer);
+void	grid_backspace(t_grid *grid, char **buffer);
+void	grid_nothing(t_grid *grid, char **buffer);
+void	parse_escape_code(t_grid *grid, char **buffer);
 
 #endif

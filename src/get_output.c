@@ -6,7 +6,7 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 02:14:38 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/12 00:36:11 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 02:34:10 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ void	print_raw_buffer(char *buffer) {
 	int	i;
 
 	i = 0;
-	printf("\x1b[31mprinting buffer\n\x1b[0m");
+	printf("\x1b[31mprinting buffer\x1b[0m\n");
 	while (buffer[i]) {
 		if (isprint(buffer[i]))
 			printf("%c", buffer[i]);
 		else
 			printf("\\x%02x", buffer[i]);
 		i++;
+		fflush(stdout);
 	}
 	printf("\n\n");
 }

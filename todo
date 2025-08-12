@@ -1,5 +1,4 @@
 make bash posix work
-	- bash output parsing seems to be more pointer arithmetic efficient than index driven, let's try that
 	- make ctrl C like events reach the shell
 	- have arrows working for cursor position and readline history
 	- make a fill and flush logic for output reading and operation rendering

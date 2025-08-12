@@ -6,31 +6,31 @@
 /*   By: seetwoo <seetwoo@gmail.com>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 03:49:04 by seetwoo           #+#    #+#             */
-/*   Updated: 2025/08/12 00:38:54 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 02:35:00 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "reverse_term.h"
 
-#ifndef DIGITS
-# define DIGITS "0123456789"
+#ifndef BASE_10
+# define BASE_10 "0123456789"
 #endif
 
 #ifndef MAX_VT100_ARG_NBR
 # define MAX_VT100_ARG_NBR 16
 #endif
 
-int	get_args(char *buffer, int *args, int *ac) {
-	int	i;
+int	get_args(char **buffer, int *args) {
+	int	ac;
 
-	*ac = 0;
-	i = 0;
+	ac = 0;
 	while (1) {
-		if (isalpha(buffer[i]) || !isdigit(buffer[i]))
-			return (i);
-		args[*ac] = strtoi_index(&buffer[i], &i);
-		if (buffer[i] == ';')
-			i++;
+		if (isalpha(**buffer) || !isdigit(**buffer) || !(**buffer))
+			return (ac);
+		args[ac] = (int)strtol(*buffer, buffer, 10);
+		ac++;
+		if (**buffer == ';')
+			(*buffer)++;
 	}
 }
 
@@ -60,23 +60,21 @@ void	erase_display(t_grid *grid, int *args, int ac) {
 	grid->full_redraw = true;
 }
 
-int	parse_escape_code(t_grid *grid, char *buffer) {
-	int	i;
+void	parse_escape_code(t_grid *grid, char **buffer) {
 	int	args[MAX_VT100_ARG_NBR];
 	int	ac;
 
-	i = 0;
-	i += skip_to_args(buffer);
-	if (!buffer[i])
-		return (i);
-	i = get_args(&buffer[i], args, &ac);
+	//print_raw_buffer(*buffer);
+	(*buffer)++;
+	skip_to_args(buffer);
+	if (!(**buffer))
+		return ;
+	ac = get_args(buffer, args);
 	if (ac == -1)
-		return (i);
-	print_raw_buffer(&buffer[i]);
-	if (buffer[i] == 'H')
+		return ;
+	if (**buffer == 'H')
 		cursor_movement(grid, args, ac);
-	else if (buffer[i] == 'J')
+	else if (**buffer == 'J')
 		erase_display(grid, args, ac);
-	i++;
-	return (i);
+	(*buffer)++;
 }

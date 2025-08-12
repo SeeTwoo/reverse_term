@@ -6,7 +6,7 @@
 /*   By: SeeTwoo <waltibee@gmail.com>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 09:15:50 by SeeTwoo           #+#    #+#             */
-/*   Updated: 2025/08/12 00:22:28 by seetwoo          ###   ########.fr       */
+/*   Updated: 2025/08/12 02:35:41 by seetwoo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,16 @@
 # define PRIVATE_EQUAL '='
 #endif
 
-int	strtoi_index(char const *s, int *index) {
-	int	n;
-
-	n = 0;
-	while (isdigit(s[*index])) {
-		n = (n * 10) + (s[*index] - '0');
-		(*index)++;
-	}
-	return (n);
-}
-
-int	skip_to_args(char *buffer) {
-	int	i;
-
-	i = 1;
-	if (buffer[i] == CSI)
-		i++;
-	if (buffer[i] == PRIVATE_QUESTION_MARK)
-		i++;
-	if (buffer[i] == PRIVATE_INFERIOR)
-		i++;
-	if (buffer[i] == PRIVATE_SUPERIOR)
-		i++;
-	if (buffer[i] == PRIVATE_EQUAL)
-		i++;
-	return (i);
+void	skip_to_args(char **buffer) {
+//	print_raw_buffer(*buffer);
+	if (**buffer == CSI)
+		(*buffer)++;
+	if (**buffer == PRIVATE_QUESTION_MARK)
+		(*buffer)++;
+	if (**buffer == PRIVATE_INFERIOR)
+		(*buffer)++;
+	if (**buffer == PRIVATE_SUPERIOR)
+		(*buffer)++;
+	if (**buffer == PRIVATE_EQUAL)
+		(*buffer)++;
 }
