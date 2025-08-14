@@ -10,18 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include "window.h"
+#include "pseudo_terminal.h"
+#include "screen.h"
+#include "terminal.h"
 
 int	main(void) {
 	t_x11	x11;
 	t_pty	pty;
 	t_grid	grid;
 	
-	if (init_window(&x11) == 1)
+	if (init_window(&x11) == FAILURE)
 		return (EXIT_FAILURE);
-	init_pty(&pty);
-	init_grid(&grid);
+	if (init_grid(&grid) == FAILURE)
+		return (EXIT_FAILURE);
+	init_pty(&pty)
 	term_runtime(&x11, &pty, &grid);
-	destroy_term(&x11);
 	return (0);
 }

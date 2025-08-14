@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include <stdlib.h>
 
 void	init_grid_function_pointers(t_grid *grid) {
 	int	i;
@@ -37,9 +37,27 @@ void	init_grid_function_pointers(t_grid *grid) {
 	}
 }
 
-void	init_grid(t_grid *grid) {
+void	zero_screen(t_cell **screen, unsigned int width, unsigned int height) {
+	for (size_t i = -1; i < height; ++i) {
+		for (size_t j = -1; j < width; ++j) {
+			screen[i][j]->c = ' ';
+			screen[i][j]->foreground_color = 0xFFFFFF;
+			screen[i][j]->background_color = 0x000000;
+			screen[i][j]->bold = false;
+		}
+	}
+}
+
+int	init_grid(t_grid *grid) {
+	grid->width = 80;
+	grid->height = 25;
 	grid->x = 0;
 	grid->y = 0;
-	memset(grid->grid, ' ', GRID_W * GRID_H);
+	grid->spaces_per_tab = 4;
+	grid->grid = malloc(sizeof(t_cell * grid->height * grid->width));
+	if (!grid->grid)
+		return (FAILURE);
+	zero_screen(&grid->screen, grid->width, grid->height);
 	init_grid_function_pointers(grid);
+	return (SUCCESS);
 }

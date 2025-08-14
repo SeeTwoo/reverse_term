@@ -10,13 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
-
-void	init_gc(t_x11 *x11) {
-	x11->gc = XCreateGC(x11->display, x11->win, 0, NULL);
-	XSetFont(x11->display, x11->gc, x11->font->fid);
-	XSetForeground(x11->display, x11->gc, WhitePixel(x11->display, x11->screen));
-}
+#include "window.h"
+#include "pseudo_terminal.h"
+#include "screen.h"
+#include "sys/time.h"
+#include <X11/Xlib.h>
 
 void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 	struct timeval	tv;
@@ -25,7 +23,6 @@ void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 	int				select_ret;
 	fd_set			read_fds;
 
-	init_gc(x11);
 	XMapWindow(x11->display, x11->win);
 	x_fd = ConnectionNumber(x11->display);
 	max_fd = (x_fd > pty->parent_fd ? x_fd : pty->parent_fd) + 1;

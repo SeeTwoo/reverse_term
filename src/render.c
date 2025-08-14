@@ -33,7 +33,7 @@ void	render_line_erasing(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	y = op->y * x11->tile_height;
 	s = &grid->grid[op->y][0];
 	XClearArea(x11->display, x11->win,
-		x, y,
+		x, y + x11->font->descent,
 		x11->tile_width * GRID_W, x11->tile_height,
 		false);
 	XDrawString(x11->display, x11->win, x11->gc, x, y + x11->tile_height, s, GRID_W);

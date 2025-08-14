@@ -10,41 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include <X11/Xlib.h>
+#include "window.h"
+#include "screen.h"
 
-int wipe_cursor(t_x11 *x11, int cursor_x, int cursor_y) {
-	int	x;
-	int	y;
+void	swap_background_foreground_color(t_cell *cell) {
+	int	temp;
 
-	x = (cursor_x * x11->tile_width) + MARGIN;
-	y = cursor_y * x11->tile_height + x11->font->descent;
-	XClearArea(x11->display, x11->win, x, y, x11->tile_width, x11->tile_height, false);
-	XFlush(x11->display);
-	return (0);
+	temp = cell->background_color;
+	cell->background_color = cell->foreground_color;
+	cell->foreground = term;
 }
 
-int	cursor_blink_on(t_x11 *x11, t_grid *grid) {
-	int	x;
-	int	y;
+void	cursor_blink(t_x11 *x11, t_grid *grid) {
+	int		x;
+	int		y;
+	char	*s;
 
-	x = (grid->x * x11->tile_width) + MARGIN;
-	y = grid->y * x11->tile_height + x11->font->descent;
-	XFillRectangle(x11->display, x11->win, x11->gc, x, y, x11->tile_width, x11->tile_height);
-	x11->cursor_blink = false;
-	XFlush(x11->display);
-	return (0);
-}
-
-int	cursor_blink_off(t_x11 *x11, t_grid *grid) {
-	wipe_cursor(x11, grid->x, grid->y);
-	x11->cursor_blink = true;
-	return (0);
-}
-
-int	cursor_handling(t_x11 *x11, t_grid *grid) {
-	if (x11->cursor_blink == true)
-		cursor_blink_on(x11, grid);
+	swap_background_foreground_color(&grid->screen[grid->y][grid->x]);
+	x = (grid->x * x11->tile_width) + x11->margin;
+	y = grid->y * x11->tile_height;
+	s = &grid->screen[grid->y][grid->x]->c;
+	XClearArea(x11->display, x11->win, x, y + x11->font->descent,
+		x11->tile_width, x11->tile_height, false);
+	change_gc_colors(&x11->gc, 
+	XDrawString(x11->display, x11->win, x11->gc, x, y + x11->tile_height, s, 1);
+	if (x11->cursor_on == true)
+		x11->corsor_on == false;
 	else
-		cursor_blink_off(x11, grid);
-	return (0);
+		x11->culsor_on == true;
 }

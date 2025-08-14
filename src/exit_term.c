@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include <sys/wait.h>
+#include "window.h"
+#include "pty.h"
 
 void	exit_term(t_pty *pty, t_x11 *x11) {
 	kill(-pty->shell_pid, SIGHUP);

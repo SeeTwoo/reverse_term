@@ -12,6 +12,12 @@
 
 #include "reverse_term.h"
 
+void	init_gc(t_x11 *x11) {
+	x11->gc = XCreateGC(x11->display, x11->win, 0, NULL);
+	XSetFont(x11->display, x11->gc, x11->font->fid);
+	XSetForeground(x11->display, x11->gc, WhitePixel(x11->display, x11->screen));
+}
+
 int	init_event(t_x11 *x11) {
 	XSelectInput(x11->display, x11->win,
 		ExposureMask | KeyPressMask | ButtonPressMask | StructureNotifyMask);
@@ -47,6 +53,7 @@ int	init_window(t_x11 *x11) {
 		return (FAILURE);
 	x11->tile_height = x11->font->ascent + x11->font->descent;
 	x11->tile_width = x11->font->max_bounds.width;
+	x11->margin = 5;
 	x11->screen = DefaultScreen(x11->display);
 	x11->root = RootWindow(x11->display, x11->screen);
 	window_width = GRID_W * x11->tile_width + 2 * MARGIN;
@@ -59,6 +66,7 @@ int	init_window(t_x11 *x11) {
 		BlackPixel(x11->display, x11->screen)
 	);
 	init_event(x11);
+	init_gc(x11);
 	setup_minimal_size(x11, window_width, window_height);
 	return (SUCCESS);
 }

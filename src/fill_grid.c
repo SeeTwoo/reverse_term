@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include "pseudo_terminal.h"
+#include "screen.h"
 
 void	scroll_grid_up(t_grid *grid) {
 	int	y;

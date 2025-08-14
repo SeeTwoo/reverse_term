@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include <X11/Xlib.h>
+#include "window.h"
 
 void	destroy_term(t_x11 *x11) {
 	XFreeFont(x11->display, x11->font);
