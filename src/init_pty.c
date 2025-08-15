@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include <stdlib.h>
+
+#include "pseudo_terminal.h"
 
 void	launch_shell(void) {
 	execlp("/bin/bash", "bash", "--posix", NULL);

@@ -9,6 +9,7 @@ SRC_FILES =	cursor_handling.c \
 			escape_code_parser_skippers.c \
 			exit_term.c \
 			fill_grid.c \
+			gc_colors.c \
 			get_output.c \
 			handle_keypress.c \
 			init_grid.c \

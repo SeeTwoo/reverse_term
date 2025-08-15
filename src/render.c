@@ -10,16 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include "screen.h"
+#include "window.h"
 
 void	render_printable(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	int		x;
 	int		y;
 	char	*s;
 
-	x = (op->x * x11->tile_width) + MARGIN;
+	x = (op->x * x11->tile_width) + x11->margin;
 	y = (op->y * x11->tile_height) + x11->tile_height;
-	s = &grid->grid[op->y][op->x];
+	s = &grid->screen[op->y][op->x].c;
 	XDrawString(x11->display, x11->win, x11->gc, x, y, s, 1);
 	XFlush(x11->display);
 }
@@ -27,29 +28,32 @@ void	render_printable(t_x11 *x11, t_grid *grid, t_render_op *op) {
 void	render_line_erasing(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	int		x;
 	int		y;
-	char	*s;
 
-	x = MARGIN;
+	(void)grid;
+	x = x11->margin;
 	y = op->y * x11->tile_height;
-	s = &grid->grid[op->y][0];
 	XClearArea(x11->display, x11->win,
 		x, y + x11->font->descent,
-		x11->tile_width * GRID_W, x11->tile_height,
+		x11->tile_width * grid->width, x11->tile_height,
 		false);
-	XDrawString(x11->display, x11->win, x11->gc, x, y + x11->tile_height, s, GRID_W);
+//	XDrawString(x11->display, x11->win, x11->gc, x, y + x11->tile_height, s, GRID_W);
 	XFlush(x11->display);
 }
 
 void	full_redraw(t_x11 *x11, t_grid *grid) {
-	int	y;
+	unsigned int	x;
+	unsigned int	y;
 
 	XClearWindow(x11->display, x11->win);
 	y = 0;
-	while (y < GRID_H) {
-		XDrawString(x11->display, x11->win, x11->gc,
-			MARGIN, (y * x11->tile_height) + x11->tile_height,
-			grid->grid[y], GRID_W
-		);
+	while (y < grid->height) {
+		x = 0;
+		while (x < grid->width) {
+			XDrawString(x11->display, x11->win, x11->gc,
+				x11->margin, (y * x11->tile_height) + x11->tile_height,
+				&grid->screen[y][x].c, 1
+			);
+		}
 		y++;
 	}
 	XFlush(x11->display);

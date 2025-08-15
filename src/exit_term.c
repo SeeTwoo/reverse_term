@@ -10,9 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <sys/wait.h>
 #include "window.h"
-#include "pty.h"
+#include "pseudo_terminal.h"
 
 void	exit_term(t_pty *pty, t_x11 *x11) {
 	kill(-pty->shell_pid, SIGHUP);

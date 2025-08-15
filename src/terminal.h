@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                         :::     ::::::::   */
-/*   pty.h                                               :+:     :+:    :+:   */
+/*   terminal.h                                          :+:     :+:    :+:   */
 /*                                                     +:+ +:+        +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                 +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
@@ -10,22 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PTY_H
-# define PTY_H
+#ifndef TERMINAL_H
+# define TERMINAL_H
 
-# include <ctype.h>
-# include <pty.h>
-# include <sys/types.h>
-# include <unistd.h>
-
-typedef struct s_pty	t_pty;
-
-struct s_pty {
-	pid_t				shell_pid;
-	int					parent_fd;
-};
-
-void	init_pty(t_pty *pty);
-int		get_output(t_pty *pty, char *buffer);
+void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid);
 
 #endif

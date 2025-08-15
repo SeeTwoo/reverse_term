@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                         :::     ::::::::   */
-/*   pty.h                                               :+:     :+:    :+:   */
+/*   gc_colors.c                                         :+:     :+:    :+:   */
 /*                                                     +:+ +:+        +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                 +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
@@ -10,22 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PTY_H
-# define PTY_H
+#include "window.h"
 
-# include <ctype.h>
-# include <pty.h>
-# include <sys/types.h>
-# include <unistd.h>
+void	gc_bg_fg_swap(t_x11 *x11) {
+	XGCValues	values;
 
-typedef struct s_pty	t_pty;
-
-struct s_pty {
-	pid_t				shell_pid;
-	int					parent_fd;
-};
-
-void	init_pty(t_pty *pty);
-int		get_output(t_pty *pty, char *buffer);
-
-#endif
+	XGetGCValues(x11->display, x11->gc, GCForeground | GCBackground, &values);
+	XSetForeground(x11->display, x11->gc, values.background);
+	XSetBackground(x11->display, x11->gc, values.foreground);
+}

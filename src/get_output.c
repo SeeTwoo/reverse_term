@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include <stdio.h>
+
+#include "pseudo_terminal.h"
 
 void	print_raw_buffer(char *buffer) {
 	int	i;

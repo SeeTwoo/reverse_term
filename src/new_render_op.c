@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include "screen.h"
 
 void	new_render_op(t_grid *grid, int type, int x, int y) {
 	grid->current_op->type = type;

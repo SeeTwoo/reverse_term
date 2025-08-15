@@ -10,11 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/time.h>
+
 #include "window.h"
 #include "pseudo_terminal.h"
 #include "screen.h"
-#include "sys/time.h"
-#include <X11/Xlib.h>
+#include "terminal.h"
+
+void	cursor_blink(t_x11 *x11, t_grid *grid);
+void	exit_term(t_pty *pty, t_x11 *x11);
+int		fill_grid(t_pty *pty, t_grid *grid);
+void	handle_keypress(t_x11 *x11, t_pty *pty);
+void	render(t_x11 *x11, t_grid *grid);
 
 void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 	struct timeval	tv;
@@ -26,7 +35,7 @@ void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 	XMapWindow(x11->display, x11->win);
 	x_fd = ConnectionNumber(x11->display);
 	max_fd = (x_fd > pty->parent_fd ? x_fd : pty->parent_fd) + 1;
-	x11->cursor_blink = true;
+	x11->cursor_on = true;
 	while (1) {
 		tv.tv_sec = 0;
 		tv.tv_usec = 500000;
@@ -39,13 +48,13 @@ void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 			perror("select");
 			exit(EXIT_FAILURE);
 		} else if (select_ret == 0) {
-			cursor_handling(x11, grid);
+			cursor_blink(x11, grid);
 			continue ;
 		}
 
 		if (FD_ISSET(pty->parent_fd, &read_fds)) {
-			wipe_cursor(x11, grid->x, grid->y);
-			if (fill_grid(pty, grid) == FAILURE)
+			//wipe_cursor(x11, grid->x, grid->y);
+			if (fill_grid(pty, grid) == 1)
 				exit(EXIT_FAILURE);
 			render(x11, grid);
 		}

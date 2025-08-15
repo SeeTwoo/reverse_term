@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include "window.h"
 
 void	init_gc(t_x11 *x11) {
 	x11->gc = XCreateGC(x11->display, x11->win, 0, NULL);
@@ -23,14 +23,14 @@ int	init_event(t_x11 *x11) {
 		ExposureMask | KeyPressMask | ButtonPressMask | StructureNotifyMask);
 	x11->wm_delete = XInternAtom(x11->display, "WM_DELETE_WINDOW", False);
 	XSetWMProtocols(x11->display, x11->win, &x11->wm_delete, 1);
-	return (SUCCESS);
+	return (0);
 }
 
 int	init_font(t_x11 *x11) {
 	x11->font = XLoadQueryFont(x11->display, "-misc-fixed-*-*-*-*-20-*-*-*-*-*-*-*");
 	if (!x11->font)
-		return (FAILURE);
-	return (SUCCESS);
+		return (1);
+	return (0);
 }
 
 void	setup_minimal_size(t_x11 *x11, int window_width, int window_height) {
@@ -48,16 +48,16 @@ int	init_window(t_x11 *x11) {
 
 	x11->display = XOpenDisplay(NULL);
 	if (!x11->display)
-		return (FAILURE);
-	if (init_font(x11) == FAILURE)
-		return (FAILURE);
+		return (1);
+	if (init_font(x11) == 1)
+		return (1);
 	x11->tile_height = x11->font->ascent + x11->font->descent;
 	x11->tile_width = x11->font->max_bounds.width;
 	x11->margin = 5;
 	x11->screen = DefaultScreen(x11->display);
 	x11->root = RootWindow(x11->display, x11->screen);
-	window_width = GRID_W * x11->tile_width + 2 * MARGIN;
-	window_height = GRID_H * x11->tile_height + 2 * MARGIN;
+	window_width = 80 * x11->tile_width + 2 * x11->margin;
+	window_height = 25 * x11->tile_height + 2 * x11->margin;
 	x11->win = XCreateSimpleWindow(x11->display, x11->root,
 		100, 100,
 		window_width, window_height,
@@ -68,5 +68,5 @@ int	init_window(t_x11 *x11) {
 	init_event(x11);
 	init_gc(x11);
 	setup_minimal_size(x11, window_width, window_height);
-	return (SUCCESS);
+	return (0);
 }

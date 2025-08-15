@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include "pseudo_terminal.h"
+#include "window.h"
 
 void	handle_keypress(t_x11 *x11, t_pty *pty) {
 	XKeyEvent	*kev;

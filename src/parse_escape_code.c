@@ -10,7 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reverse_term.h"
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "screen.h"
 
 #ifndef BASE_10
 # define BASE_10 "0123456789"
@@ -47,10 +51,10 @@ void	parse_escape_code(t_grid *grid, char **buffer) {
 	if (ac == -1)
 		return ;
 	if (**buffer == 'H')
-		cursor_movement(grid, args, ac);
+		H_cursor_movement(grid, args, ac);
 	else if (**buffer == 'J')
-		erase_display(grid, args, ac);
+		J_erase_display(grid, args, ac);
 	else if (**buffer == 'K')
-		erase_line(grid, args, ac);
+		K_erase_line(grid, args, ac);
 	(*buffer)++;
 }

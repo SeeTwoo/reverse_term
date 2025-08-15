@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                         :::     ::::::::   */
-/*   pty.h                                               :+:     :+:    :+:   */
+/*   cursor_bounds_check.c                               :+:     :+:    :+:   */
 /*                                                     +:+ +:+        +:+     */
 /*   By: seetwoo <seetwoo@gmail.com>                 +#+  +:+       +#+       */
 /*                                                 +#+#+#+#+#+   +#+          */
@@ -10,22 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PTY_H
-# define PTY_H
+#include "screen.h"
 
-# include <ctype.h>
-# include <pty.h>
-# include <sys/types.h>
-# include <unistd.h>
+int	cursor_is_left(t_grid *grid) {
+	return (grid->x == grid->width - 1);
+}
 
-typedef struct s_pty	t_pty;
+int	cursor_is_right(t_grid *grid) {
+	return (grid->x == 0);
+}
 
-struct s_pty {
-	pid_t				shell_pid;
-	int					parent_fd;
-};
-
-void	init_pty(t_pty *pty);
-int		get_output(t_pty *pty, char *buffer);
-
-#endif
+int	cursor_is_down(t_grid *grid) {
+	return (grid->y == grid->height - 1);
+}

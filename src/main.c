@@ -20,11 +20,11 @@ int	main(void) {
 	t_pty	pty;
 	t_grid	grid;
 	
-	if (init_window(&x11) == FAILURE)
-		return (EXIT_FAILURE);
-	if (init_grid(&grid) == FAILURE)
-		return (EXIT_FAILURE);
-	init_pty(&pty)
+	if (init_window(&x11) == 1)
+		return (1);
+	if (init_grid(&grid) == 1)
+		return (1);
+	init_pty(&pty);
 	term_runtime(&x11, &pty, &grid);
 	return (0);
 }
