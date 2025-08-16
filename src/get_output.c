@@ -39,6 +39,6 @@ int	get_output(t_pty *pty, char *buffer) {
 	if (bytes_read <= 0)
 		return (bytes_read);
 	buffer[bytes_read] = '\0';
-//	print_raw_buffer(buffer);
+	print_raw_buffer(buffer);
 	return (bytes_read);
 }

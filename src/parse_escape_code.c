@@ -50,11 +50,6 @@ void	parse_escape_code(t_grid *grid, char **buffer) {
 	ac = get_args(buffer, args);
 	if (ac == -1)
 		return ;
-	if (**buffer == 'H')
-		H_cursor_movement(grid, args, ac);
-	else if (**buffer == 'J')
-		J_erase_display(grid, args, ac);
-	else if (**buffer == 'K')
-		K_erase_line(grid, args, ac);
+	grid->command_functions[(int)(**buffer - 'A')](grid, args, ac);
 	(*buffer)++;
 }

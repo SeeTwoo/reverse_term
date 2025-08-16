@@ -19,11 +19,13 @@ typedef struct s_grid		t_grid;
 typedef struct s_render_op	t_render_op;
 
 typedef void				(*t_grid_function)(t_grid *grid, char **buffer);
+typedef void				(*t_vt100_command)(t_grid *grid, int *args, int ac);
 
 typedef enum {
 	PRINTABLE,
 	ERASE_DISPLAY,
 	ERASE_LINE,
+	DELETE_CHARACTER,
 	END_LIST
 } e_render_op_tye;
 
@@ -45,6 +47,7 @@ struct s_grid {
 	unsigned int	height;
 	bool			full_redraw;
 	t_grid_function	grid_functions[256];
+	t_vt100_command	command_functions[58];
 	t_render_op		operations[4096];
 	t_render_op		*current_op;
 };
@@ -53,9 +56,13 @@ struct s_grid {
 int		init_grid(t_grid *grid);
 void	skip_to_args(char **buffer);
 
+void	A_cursor_up(t_grid *grid, int *args, int ac);
+void	C_cursor_forward(t_grid *grid, int *args, int ac);
 void	H_cursor_movement(t_grid *grid, int *args, int ac);
 void	J_erase_display(t_grid *grid, int *args, int ac);
 void	K_erase_line(t_grid *grid, int *args, int ac);
+void	P_delete_character(t_grid *grid, int *args, int ac);
+void	command_nothing(t_grid *grid, int *args, int ac);
 
 void	new_render_op(t_grid *grid, int type, int x, int y);
 

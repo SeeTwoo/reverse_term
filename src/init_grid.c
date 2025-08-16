@@ -42,6 +42,29 @@ void	init_grid_function_pointers(t_grid *grid) {
 	}
 }
 
+void	init_vt100_command_function_pointers(t_grid *grid) {
+	int	i;
+
+	i = 0;
+	while (i < 58) {
+		if (i + 'A' == 'A')
+			grid->command_functions[i] = A_cursor_up;
+		else if (i + 'A' == 'C')
+			grid->command_functions[i] = C_cursor_forward;
+		else if (i + 'A' == 'H')
+			grid->command_functions[i] = H_cursor_movement;
+		else if (i + 'A' == 'J')
+			grid->command_functions[i] = J_erase_display;
+		else if (i + 'A' == 'K')
+			grid->command_functions[i] = K_erase_line;
+		else if (i + 'A' == 'P')
+			grid->command_functions[i] = P_delete_character;
+		else
+			grid->command_functions[i] = command_nothing;
+		i++;
+	}
+}
+
 size_t	chunk_needed(t_grid *grid) {
 	size_t	total_size;
 
@@ -122,5 +145,6 @@ int	init_grid(t_grid *grid) {
 	grid->y = 0;
 	grid->spaces_per_tab = 4;
 	init_grid_function_pointers(grid);
+	init_vt100_command_function_pointers(grid);
 	return (0);
 }

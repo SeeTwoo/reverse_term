@@ -1,13 +1,10 @@
 make bash posix work
+	- try and make it responsive (weid delay and cursor visibility)
 	- make better backspace handling when the previous line is not full
 	- now basic ctrl -c works, tinker with events and output so yes does not block the terminal
-	- have arrows working for cursor position and readline history
 	- make a fill and flush logic for output reading and operation rendering
 	- try and find edge cases
 	- have the code to the coding style
-	- menu de tab si y a un doute, deja y a un retour a la ligne et franchement c est pas ouf ouf
-		puis en plus, ca devrait passer sur tout les choix comme bash en fait, ca me parait logique
-		- loser
 
 make zsh work
 make vim work

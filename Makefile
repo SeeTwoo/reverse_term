@@ -21,7 +21,9 @@ SRC_FILES =	cursor_bounds_check.c \
 			parse_escape_code.c \
 			render.c \
 			term_runtime.c \
-			VT100_commands.c
+			VT100_ABCD_commands.c \
+			VT100_commands.c \
+			VT100_KJ_erase_commands.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
