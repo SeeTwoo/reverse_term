@@ -15,25 +15,33 @@
 #include "window.h"
 #include "screen.h"
 
-void	cursor_blink(t_x11 *x11, t_grid *grid) {
-	int		x;
-	int		y;
-	char	*s;
-
-	if (x11->cursor_on == true)
-		gc_bg_fg_swap(x11);
-	x = (grid->x * x11->tile_width) + x11->margin;
-	y = grid->y * x11->tile_height;
-	s = &grid->screen[grid->y][grid->x];
-	XClearArea(x11->display, x11->win, x, y + x11->font->descent,
-		x11->tile_width, x11->tile_height, false);
+void	cursor_blink_on(t_x11 *x11, t_grid *grid) {
+	gc_bg_fg_swap(x11);
 	XDrawImageString(x11->display, x11->win, x11->gc,
-		x, y + x11->tile_height, s, 1);
-	if (x11->cursor_on == true) {
-		gc_bg_fg_swap(x11);
-		x11->cursor_on = false;
-	} else {
-		x11->cursor_on = true;
-	}
+		(grid->x * x11->tile_width) + x11->margin,
+		(grid->y * x11->tile_height) + x11->tile_height,
+		&grid->screen[grid->y][grid->x],
+		1
+	);
+	gc_bg_fg_swap(x11);
+	x11->cursor_on = false;
 	XFlush(x11->display);
+}
+
+void	cursor_blink_off(t_x11 *x11, t_grid *grid) {
+	XDrawImageString(x11->display, x11->win, x11->gc,
+		(grid->x * x11->tile_width) + x11->margin,
+		(grid->y * x11->tile_height) + x11->tile_height,
+		&grid->screen[grid->y][grid->x],
+		1
+	);
+	x11->cursor_on = true;
+	XFlush(x11->display);
+}
+
+void	cursor_blink(t_x11 *x11, t_grid *grid) {
+	if (x11->cursor_on == true)
+		cursor_blink_on(x11, grid);
+	else
+		cursor_blink_off(x11, grid);
 }

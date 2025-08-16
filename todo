@@ -1,11 +1,9 @@
 make bash posix work
+	- make better backspace handling when the previous line is not full
 	- now basic ctrl -c works, tinker with events and output so yes does not block the terminal
 	- have arrows working for cursor position and readline history
 	- make a fill and flush logic for output reading and operation rendering
 	- try and find edge cases
-		printf "abcdef\b\b\b123" -- should output "abc123"
-	- think of the indexing of the cursor in the code as the grid starts at 0 (regular c indexing)
-		but the VT100 commands starts at 1 (absolute dogshit)
 	- have the code to the coding style
 	- menu de tab si y a un doute, deja y a un retour a la ligne et franchement c est pas ouf ouf
 		puis en plus, ca devrait passer sur tout les choix comme bash en fait, ca me parait logique

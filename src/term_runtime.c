@@ -20,6 +20,7 @@
 #include "terminal.h"
 
 void	cursor_blink(t_x11 *x11, t_grid *grid);
+void	cursor_blink_off(t_x11 *x11, t_grid *grid);
 void	exit_term(t_pty *pty, t_x11 *x11);
 int		fill_grid(t_pty *pty, t_grid *grid);
 void	handle_keypress(t_x11 *x11, t_pty *pty);
@@ -53,7 +54,7 @@ void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 		}
 
 		if (FD_ISSET(pty->parent_fd, &read_fds)) {
-			//wipe_cursor(x11, grid->x, grid->y);
+			cursor_blink_off(x11, grid);
 			if (fill_grid(pty, grid) == 1)
 				exit(EXIT_FAILURE);
 			render(x11, grid);
