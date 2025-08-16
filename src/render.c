@@ -20,7 +20,7 @@ void	render_printable(t_x11 *x11, t_grid *grid, t_render_op *op) {
 
 	x = (op->x * x11->tile_width) + x11->margin;
 	y = (op->y * x11->tile_height) + x11->tile_height;
-	s = &grid->screen[op->y][op->x].c;
+	s = &grid->screen[op->y][op->x];
 	XDrawString(x11->display, x11->win, x11->gc, x, y, s, 1);
 	XFlush(x11->display);
 }
@@ -41,19 +41,15 @@ void	render_line_erasing(t_x11 *x11, t_grid *grid, t_render_op *op) {
 }
 
 void	full_redraw(t_x11 *x11, t_grid *grid) {
-	unsigned int	x;
 	unsigned int	y;
 
 	XClearWindow(x11->display, x11->win);
 	y = 0;
 	while (y < grid->height) {
-		x = 0;
-		while (x < grid->width) {
-			XDrawString(x11->display, x11->win, x11->gc,
-				x11->margin, (y * x11->tile_height) + x11->tile_height,
-				&grid->screen[y][x].c, 1
-			);
-		}
+		XDrawString(x11->display, x11->win, x11->gc,
+			x11->margin, (y * x11->tile_height) + x11->tile_height,
+			grid->screen[y], grid->width
+		);
 		y++;
 	}
 	XFlush(x11->display);

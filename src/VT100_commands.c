@@ -23,40 +23,20 @@ void	H_cursor_movement(t_grid *grid, int *args, int ac) {
 	grid->y = args[0] - 1;
 }
 
-void	erase_line(t_grid *grid, int start, int finish, int y) {
-	int	x;
-
-	x = start;
-	while (x < finish) {
-		grid->screen[y][x].c = ' ';
-		x++;
-	}
-}
-
-void	erase_several_lines(t_grid *grid, int start, int finish) {
-	int	y;
-
-	y = start;
-	while (y < finish) {
-		erase_line(grid, 0, grid->width - 1, y);
-		y++;
-	}
-}
-
 //0 will erase from the cursor to the end of the screen
 //1 will erase from the cursor to the beginning of the screen
 //2 will erase the whole screen
 void	J_erase_display(t_grid *grid, int *args, int ac) {
 	(void)ac;
-	if (args[0] == 0) {
-		erase_line(grid, grid->x, grid->width - 1, grid->y);
-		erase_several_lines(grid, grid->y + 1, grid->height - 1);
-	} else if (args[0] == 1) {
-		erase_line(grid, 0, grid->x, grid->y);
-		erase_several_lines(grid, 0, grid->y - 1);
-	} else if (args[0] == 2) {
-		erase_several_lines(grid, 0, grid->height - 1);
-	}
+	if (args[0] == 0)
+		memset(&grid->screen[grid->y][grid->x], ' ',
+			(grid->width - grid->x) + ((grid->height - grid->y) * grid->width));
+	else if (args[0] == 1)
+		memset(grid->screen[0], ' ', 
+			(grid->width - grid->x) + ((grid->height - grid->y) * grid->width));
+	else if (args[0] == 2)
+		memset(grid->screen[0], ' ',
+			grid->width * grid->height);
 	new_render_op(grid, ERASE_DISPLAY, grid->x, grid->y);
 	grid->full_redraw = true;
 }
@@ -68,9 +48,9 @@ void	K_erase_line(t_grid *grid, int *args, int ac) {
 	if (ac == 0)
 		args[0] = 0;
 	if (args[0] == 0)
-		erase_line(grid, grid->x, grid->width - 1, grid->y);
+		memset(&grid->screen[grid->y][grid->x], ' ', grid->width - grid->x);
 	if (args[0] == 1)
-		erase_line(grid, 0, grid->x, grid->y);
+		memset(grid->screen[grid->y], ' ', grid->x + 1);
 	if (args[0] == 2)
-		erase_line(grid, 0, grid->width - 1, grid->y);
+		memset(grid->screen[grid->y], ' ', grid->width);
 }

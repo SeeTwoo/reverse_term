@@ -15,7 +15,6 @@
 
 #include <stdbool.h>
 
-typedef struct s_cell		t_cell;
 typedef struct s_grid		t_grid;
 typedef struct s_render_op	t_render_op;
 
@@ -34,15 +33,11 @@ struct s_render_op {
 	int y;
 };
 
-struct s_cell {
-	char	c;
-	int		foreground_color;
-	int		background_color;
-	bool	bold;
-};
-
 struct s_grid {
-	t_cell			**screen;
+	void			*chunk;
+	char			**screen;
+	int				**fg_colors;
+	int				**bg_colors;
 	unsigned int	x;
 	unsigned int	y;
 	unsigned int	spaces_per_tab;
@@ -63,6 +58,10 @@ void	J_erase_display(t_grid *grid, int *args, int ac);
 void	K_erase_line(t_grid *grid, int *args, int ac);
 
 void	new_render_op(t_grid *grid, int type, int x, int y);
+
+int		cursor_is_right(t_grid *grid);
+int		cursor_is_left(t_grid *grid);
+int		cursor_is_down(t_grid *grid);
 
 void	grid_printable(t_grid *grid, char **buffer);
 void	grid_vertical_tab(t_grid *grid, char **buffer);

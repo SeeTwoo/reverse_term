@@ -4,7 +4,8 @@ DFLAGS = $(CFLAGS) -g3
 INCLUDES = -Iincludes
 
 SRC_DIR = src
-SRC_FILES =	cursor_handling.c \
+SRC_FILES =	cursor_bounds_check.c \
+			cursor_handling.c \
 			destroy_term.c \
 			escape_code_parser_skippers.c \
 			exit_term.c \
