@@ -43,9 +43,10 @@ void	render_line_erasing(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	XFlush(x11->display);
 }
 
-void	full_redraw(t_x11 *x11, t_grid *grid) {
+void	full_redraw(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	unsigned int	y;
 
+	(void)op;
 	XClearWindow(x11->display, x11->win);
 	y = 0;
 	while (y < grid->height) {
@@ -59,22 +60,26 @@ void	full_redraw(t_x11 *x11, t_grid *grid) {
 	grid->full_redraw = false;
 }
 
+void	render_character_deletion(t_x11 *x11, t_grid *grid, t_render_op *op) {
+	(void)x11;
+	(void)grid;
+	(void)op;
+}
+
+#include <stdio.h>
 void	render(t_x11 *x11, t_grid *grid) {
 	int	i;
 
 	if (grid->full_redraw == true) {
-		full_redraw(x11, grid);
+		full_redraw(x11, grid, NULL);
 		return ;
 	}
 	i = 0;
 	while (grid->operations[i].type != END_LIST && i < 4096) {
-		if (grid->operations[i].type == PRINTABLE)
-			render_printable(x11, grid, &grid->operations[i]);
-		else if (grid->operations[i].type == ERASE_DISPLAY)
-			full_redraw(x11, grid);
-		else if (grid->operations[i].type == ERASE_LINE)
-			render_line_erasing(x11, grid, &grid->operations[i]);
+		grid->render_operation_functions[grid->operations[i].type]
+			(x11, grid, &grid->operations[i]);
 		i++;
 	}
-	XFlush(x11->display);
+	printf("hello\n");
+//	XFlush(x11->display);
 }

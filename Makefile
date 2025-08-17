@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-DFLAGS = $(CFLAGS) -g3
+DFLAGS = $(CFLAGS) -g3 -O0
 INCLUDES = -Iincludes
 
 SRC_DIR = src
@@ -13,6 +13,7 @@ SRC_FILES =	cursor_bounds_check.c \
 			gc_colors.c \
 			get_output.c \
 			handle_keypress.c \
+			init_function_pointer_arrays.c \
 			init_grid.c \
 			init_pty.c \
 			init_window.c \

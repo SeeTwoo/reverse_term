@@ -17,9 +17,11 @@
 
 typedef struct s_grid		t_grid;
 typedef struct s_render_op	t_render_op;
+typedef struct s_x11		t_x11;
 
 typedef void				(*t_grid_function)(t_grid *grid, char **buffer);
 typedef void				(*t_vt100_command)(t_grid *grid, int *args, int ac);
+typedef void				(*t_render_op_fun)(t_x11 *x11, t_grid *grid, t_render_op *op);
 
 typedef enum {
 	PRINTABLE,
@@ -48,6 +50,7 @@ struct s_grid {
 	bool			full_redraw;
 	t_grid_function	grid_functions[256];
 	t_vt100_command	command_functions[58];
+	t_render_op_fun	render_operation_functions[4];
 	t_render_op		operations[4096];
 	t_render_op		*current_op;
 };
@@ -78,5 +81,10 @@ void	grid_tab(t_grid *grid, char **buffer);
 void	grid_backspace(t_grid *grid, char **buffer);
 void	grid_nothing(t_grid *grid, char **buffer);
 void	parse_escape_code(t_grid *grid, char **buffer);
+
+void	full_redraw(t_x11 *x11, t_grid *grid, t_render_op *op);
+void	render_line_erasing(t_x11 *x11, t_grid *grid, t_render_op *op);
+void	render_printable(t_x11 *x11, t_grid *grid, t_render_op *op);
+void	render_character_deletion(t_x11 *x11, t_grid *grid, t_render_op *op);
 
 #endif
