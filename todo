@@ -1,7 +1,14 @@
-make bash posix work
-	- now basic ctrl -c works, tinker with events and output so yes does not block the terminal
-	- make a fill and flush logic for output reading and operation rendering
-	- have the code to the coding style
+roadmap to usable terminal
+	-have zsh (colors)
+	-scrollable history
+	-resize
+
+important for the lols
+	-parse the font to enjoy a leak free experience
 
 make zsh work
 make vim work
+
+not fun to do
+	- fix yes
+	- check points of failure and make sure everything is freed properly

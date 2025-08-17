@@ -10,9 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include <unistd.h>
 
 int	main(void) {
-	printf("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n");
+	char	line[1000000];
+	int		i;
+
+	i = 0;
+	while (i < 1000000) {
+		line[i] = 'A';
+		i++;
+	}
+	write(1, line, 999999);
 	return (0);
 }
