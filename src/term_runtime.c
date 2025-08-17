@@ -21,6 +21,7 @@
 
 void	cursor_blink(t_x11 *x11, t_grid *grid);
 void	cursor_blink_off(t_x11 *x11, t_grid *grid);
+void	cursor_blink_on(t_x11 *x11, t_grid *grid);
 void	exit_term(t_pty *pty, t_x11 *x11);
 int		fill_grid(t_pty *pty, t_grid *grid);
 void	handle_keypress(t_x11 *x11, t_pty *pty);
@@ -57,6 +58,7 @@ void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 			cursor_blink_off(x11, grid);
 			if (fill_grid(pty, grid) == 1)
 				exit(EXIT_FAILURE);
+			cursor_blink_on(x11, grid);
 			render(x11, grid);
 		}
 
