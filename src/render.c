@@ -13,6 +13,8 @@
 #include "screen.h"
 #include "window.h"
 
+void	cursor_blink_on(t_x11 *x11, t_grid *grid);
+
 void	render_printable(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	int		x;
 	int		y;
@@ -21,8 +23,8 @@ void	render_printable(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	x = (op->x * x11->tile_width) + x11->margin;
 	y = (op->y * x11->tile_height) + x11->tile_height;
 	s = &grid->screen[op->y][op->x];
-	x11->cursor_on = true;
 	XDrawString(x11->display, x11->win, x11->gc, x, y, s, 1);
+	cursor_blink_on(x11, grid);
 	XFlush(x11->display);
 }
 
