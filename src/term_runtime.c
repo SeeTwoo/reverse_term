@@ -26,6 +26,7 @@ void	exit_term(t_pty *pty, t_x11 *x11);
 int		fill_grid(t_pty *pty, t_grid *grid);
 void	handle_keypress(t_x11 *x11, t_pty *pty);
 void	render(t_x11 *x11, t_grid *grid);
+void	print_grid(t_grid *grid);
 
 void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 	struct timeval	tv;

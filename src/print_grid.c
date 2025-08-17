@@ -21,8 +21,11 @@ void	print_grid(t_grid *grid) {
 	i = 0;
 	while (i < 25) {
 		printf("[");
+		fflush(stdout);
 		write(1, grid->screen[i], 80);
+		fflush(stdout);
 		printf("]\n");
+		fflush(stdout);
 		i++;
 	}
 }

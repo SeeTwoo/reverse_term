@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include <string.h>
 
 #include "pseudo_terminal.h"
@@ -29,10 +30,10 @@ void	scroll_grid_up(t_grid *grid) {
 }
 
 void	grid_printable(t_grid *grid, char **buffer) {
-	if (cursor_is_left(grid) && !cursor_is_down(grid)) {
+	if (cursor_is_right(grid) && !cursor_is_down(grid)) {
 		grid->x = 0;
 		grid->y++;
-	} else if (cursor_is_left(grid) && cursor_is_down(grid)) {
+	} else if (cursor_is_right(grid) && cursor_is_down(grid)) {
 		scroll_grid_up(grid);
 	}
 	new_render_op(grid, PRINTABLE, grid->x, grid->y);
@@ -56,6 +57,7 @@ void	grid_vertical_tab(t_grid *grid, char **buffer) {
 		scroll_grid_up(grid);
 	else
 		grid->y++;
+//	printf("vertical tab\n");
 	(*buffer)++;
 }	
 
@@ -72,6 +74,7 @@ void	grid_newline(t_grid *grid, char **buffer) {
 		grid->y++;
 		grid->x = 0;
 	}
+//	printf("newline\n");
 	(*buffer)++;
 }
 
@@ -97,7 +100,7 @@ void	grid_nothing(t_grid *grid, char **buffer) {
 }
 
 int	fill_grid(t_pty *pty, t_grid *grid) {
-	char	buffer[1024];
+	char	buffer[2048];
 	char	*current;
 	
 	if (get_output(pty, buffer) <= 0)
