@@ -25,5 +25,6 @@ void	C_cursor_forward(t_grid *grid, int *args, int ac) {
 		args[0] = 1;
 	if (cursor_is_right(grid))
 		return ;
+	printf("hello from the C command\n");
 	grid->x++;
 }
