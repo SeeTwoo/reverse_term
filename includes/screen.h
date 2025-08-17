@@ -35,6 +35,7 @@ struct s_render_op {
 	int	type;
 	int	x;
 	int y;
+	int	len;
 };
 
 struct s_grid {

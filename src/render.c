@@ -43,6 +43,7 @@ void	render_line_erasing(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	XFlush(x11->display);
 }
 
+#include <stdio.h>
 void	full_redraw(t_x11 *x11, t_grid *grid, t_render_op *op) {
 	unsigned int	y;
 
@@ -61,9 +62,12 @@ void	full_redraw(t_x11 *x11, t_grid *grid, t_render_op *op) {
 }
 
 void	render_character_deletion(t_x11 *x11, t_grid *grid, t_render_op *op) {
-	(void)x11;
-	(void)grid;
-	(void)op;
+	XClearArea(x11->display, x11->win,
+		(op->x * x11->tile_width) + x11->margin,
+		(op->y * x11->tile_height) + x11->font->descent,
+		x11->tile_width * (grid->width - op->x), x11->tile_height,
+		false
+	);
 }
 
 #include <stdio.h>
@@ -80,6 +84,4 @@ void	render(t_x11 *x11, t_grid *grid) {
 			(x11, grid, &grid->operations[i]);
 		i++;
 	}
-	printf("hello\n");
-//	XFlush(x11->display);
 }

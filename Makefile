@@ -20,6 +20,7 @@ SRC_FILES =	cursor_bounds_check.c \
 			main.c \
 			new_render_op.c \
 			parse_escape_code.c \
+			print_grid.c \
 			render.c \
 			term_runtime.c \
 			VT100_ABCD_commands.c \

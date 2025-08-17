@@ -14,6 +14,8 @@
 
 #include "screen.h"
 
+void	print_grid(t_grid *grid);
+
 void	command_nothing(t_grid *grid, int *args, int ac) {
 	(void)grid;
 	(void)args;
@@ -34,7 +36,8 @@ void	P_delete_character(t_grid *grid, int *args, int ac) {
 		args[0] = 1;
 	memmove(&grid->screen[grid->y][grid->x],
 		&grid->screen[grid->y][grid->x + args[0]],
-		(grid->width - grid->x - args[0]) + (grid->width * (grid->height - grid->y + 1))
+		(grid->width - (grid->x + 1) - args[0]) + (grid->width * (grid->height - grid->y + 1))
 	);
-	grid->full_redraw = true;
+	new_render_op(grid, DELETE_CHARACTER, grid->x, grid->y);
+	//print_grid(grid);
 }
