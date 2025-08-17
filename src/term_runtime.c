@@ -28,6 +28,26 @@ void	handle_keypress(t_x11 *x11, t_pty *pty);
 void	render(t_x11 *x11, t_grid *grid);
 void	print_grid(t_grid *grid);
 
+void	treat_output(t_x11 *x11, t_pty *pty, t_grid *grid) {
+	cursor_blink_off(x11, grid);
+	if (fill_grid(pty, grid) == 1)
+		exit(EXIT_FAILURE);
+	cursor_blink_on(x11, grid);
+	render(x11, grid);
+}
+
+void	x11_events(t_x11 *x11, t_pty *pty, t_grid *grid) {
+	do {
+		XNextEvent(x11->display, &x11->event);
+		if (x11->event.type == ClientMessage && (Atom)x11->event.xclient.data.l[0] == x11->wm_delete)
+			exit_term(pty ,x11);
+		if (x11->event.type == KeyPress)
+			handle_keypress(x11, pty);
+		if (x11->event.type == Expose)
+			render(x11, grid);
+	} while (XPending(x11->display));
+}
+
 void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 	struct timeval	tv;
 	struct winsize	ws;
@@ -58,25 +78,9 @@ void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 			cursor_blink(x11, grid);
 			continue ;
 		}
-
-		if (FD_ISSET(pty->parent_fd, &read_fds)) {
-			cursor_blink_off(x11, grid);
-			if (fill_grid(pty, grid) == 1)
-				exit(EXIT_FAILURE);
-			cursor_blink_on(x11, grid);
-			render(x11, grid);
-		}
-
-		if (FD_ISSET(x_fd, &read_fds)) {
-			do {
-				XNextEvent(x11->display, &x11->event);
-				if (x11->event.type == ClientMessage && (Atom)x11->event.xclient.data.l[0] == x11->wm_delete)
-					exit_term(pty ,x11);
-				if (x11->event.type == KeyPress)
-					handle_keypress(x11, pty);
-				if (x11->event.type == Expose)
-					render(x11, grid);
-			} while (XPending(x11->display));
-		}
+		if (FD_ISSET(pty->parent_fd, &read_fds))
+			treat_output(x11, pty, grid);
+		if (FD_ISSET(x_fd, &read_fds))
+			x11_events(x11, pty, grid);
 	}
 }
