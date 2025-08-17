@@ -29,11 +29,15 @@ void	render(t_x11 *x11, t_grid *grid);
 
 void	term_runtime(t_x11 *x11, t_pty *pty, t_grid *grid) {
 	struct timeval	tv;
+	struct winsize	ws;
 	int				x_fd;
 	int				max_fd;
 	int				select_ret;
 	fd_set			read_fds;
 
+	ws.ws_row = grid->height;
+	ws.ws_col = grid->width;
+	ioctl(STDOUT_FILENO, TIOCSWINSZ, &ws);
 	XMapWindow(x11->display, x11->win);
 	x_fd = ConnectionNumber(x11->display);
 	max_fd = (x_fd > pty->parent_fd ? x_fd : pty->parent_fd) + 1;

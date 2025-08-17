@@ -1,9 +1,7 @@
 make bash posix work
-	- make better backspace handling when the previous line is not full
 	- look into properly rendering git's output
 	- now basic ctrl -c works, tinker with events and output so yes does not block the terminal
 	- make a fill and flush logic for output reading and operation rendering
-	- try and find edge cases
 	- have the code to the coding style
 
 make zsh work

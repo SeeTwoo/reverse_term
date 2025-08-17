@@ -50,7 +50,6 @@ void	parse_escape_code(t_grid *grid, char **buffer) {
 	ac = get_args(buffer, args);
 	if (ac == -1)
 		return ;
-	printf("command is %c\n", **buffer);
 	grid->command_functions[(int)(**buffer - 'A')](grid, args, ac);
 	(*buffer)++;
 }

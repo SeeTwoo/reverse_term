@@ -42,7 +42,7 @@ void	grid_printable(t_grid *grid, char **buffer) {
 }
 
 void	grid_backspace(t_grid *grid, char **buffer) {
-	if (cursor_is_right(grid)) {
+	if (cursor_is_left(grid)) {
 		grid->y--;
 		grid->x = grid->width - 1;
 	} else {

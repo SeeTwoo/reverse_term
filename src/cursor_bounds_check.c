@@ -13,11 +13,11 @@
 #include "screen.h"
 
 int	cursor_is_left(t_grid *grid) {
-	return (grid->x == grid->width - 1);
+	return (grid->x == 0);
 }
 
 int	cursor_is_right(t_grid *grid) {
-	return (grid->x == 0);
+	return (grid->x == grid->width - 1);
 }
 
 int	cursor_is_down(t_grid *grid) {

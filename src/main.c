@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+
 #include "window.h"
 #include "pseudo_terminal.h"
 #include "screen.h"
@@ -20,6 +22,7 @@ int	main(void) {
 	t_pty	pty;
 	t_grid	grid;
 	
+	setenv("TERM", "xterm-256color", 1);
 	if (init_window(&x11) == 1)
 		return (1);
 	if (init_grid(&grid) == 1)

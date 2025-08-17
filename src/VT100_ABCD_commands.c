@@ -23,8 +23,8 @@ void	A_cursor_up(t_grid *grid, int *args, int ac) {
 void	C_cursor_forward(t_grid *grid, int *args, int ac) {
 	if (ac == 0)
 		args[0] = 1;
-	if (cursor_is_right(grid))
+	if (cursor_is_right(grid)) {
 		return ;
-	printf("hello from the C command\n");
+	}
 	grid->x++;
 }
