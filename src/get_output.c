@@ -30,7 +30,7 @@ void	print_raw_buffer(char *buffer) {
 	printf("\n\n");
 }
 
-/*int	truncated_escape_sequence(char *buffer) {
+int	truncated_escape_sequence(char *buffer) {
 	int	i;
 
 	i = 1022;
@@ -41,13 +41,16 @@ void	print_raw_buffer(char *buffer) {
 	return (1);
 }
 
-void	complete_escape_sequence(char *buffer, int *bytes_read) {
-	
+void	complete_escape_sequence(t_pty *pty, char *buffer, int *bytes_read) {
+	while (1) {
+		read(pty->parent_fd, &buffer[*bytes_read], 1);
+		if (isalpha(buffer[*bytes_read]))
+			break ;
+		(*bytes_read)++;
+	}
+	buffer[*bytes_read] = '\0';
 }
-*/
 
-//to replace with something along the line of get next line that could handle
-//something arbitraryly large
 int	get_output(t_pty *pty, char *buffer) {
 	int	bytes_read;
 
@@ -55,8 +58,8 @@ int	get_output(t_pty *pty, char *buffer) {
 	if (bytes_read <= 0)
 		return (bytes_read);
 	buffer[bytes_read] = '\0';
-//	print_raw_buffer(buffer);
-	//if (bytes_read == 1023 && truncated_escape_sequence(buffer))
-	//	complete_escape_sequence;
+	print_raw_buffer(buffer);
+	if (bytes_read == 1023 && truncated_escape_sequence(buffer))
+		complete_escape_sequence(pty, buffer, &bytes_read);
 	return (bytes_read);
 }
